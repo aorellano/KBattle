@@ -45,6 +45,7 @@
 		D0E3325D28BEEE5B006D0D77 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3325C28BEEE5B006D0D77 /* SessionService.swift */; };
 		D0E3325F28BEEEDC006D0D77 /* SessionUserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3325E28BEEEDC006D0D77 /* SessionUserDetails.swift */; };
 		D0E3326128BF0CE8006D0D77 /* CreateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3326028BF0CE8006D0D77 /* CreateValidator.swift */; };
+		D0E3326328BFD29D006D0D77 /* CreateFormValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3326228BFD29D006D0D77 /* CreateFormValidatorTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		D0E3325C28BEEE5B006D0D77 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		D0E3325E28BEEEDC006D0D77 /* SessionUserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionUserDetails.swift; sourceTree = "<group>"; };
 		D0E3326028BF0CE8006D0D77 /* CreateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateValidator.swift; sourceTree = "<group>"; };
+		D0E3326228BFD29D006D0D77 /* CreateFormValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFormValidatorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				D0192A1D28BDE2EF009EC882 /* K_BattleTests.swift */,
+				D0E3326228BFD29D006D0D77 /* CreateFormValidatorTests.swift */,
 			);
 			path = "K-BattleTests";
 			sourceTree = "<group>";
@@ -448,6 +451,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0E3326328BFD29D006D0D77 /* CreateFormValidatorTests.swift in Sources */,
 				D0192A1E28BDE2EF009EC882 /* K_BattleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
