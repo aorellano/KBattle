@@ -16,7 +16,7 @@ struct ContentView: View {
                 .font(.system(size: 20))
                 .foregroundColor(.gray)
             ForEach(users, id: \.self) { bubble in
-                ProfilePicView(profilePic: bubble)
+                ProfilePicView(profilePic: bubble, size: 100, cornerRadius: 50)
                     .foregroundColor(.blue)
                   
                     

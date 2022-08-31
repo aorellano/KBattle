@@ -15,7 +15,18 @@ struct K_BattleApp: App {
     
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            switch sessionService.state {
+                case .loggedIn:
+                TabView {
+                    HomeView()
+                        .environmentObject(sessionService)
+                        .tabItem {
+                            Label("Home", systemImage: "house")
+                        }
+                }
+                case .loggedOut:
+                    LoginView()
+            }
         }
     }
 }
