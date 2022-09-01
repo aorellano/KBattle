@@ -11,7 +11,14 @@ import Firebase
 struct WaitingRoomView: View {
     var users = ["mina", "jihyo", "jin", "minnie"]
     var gameServiceImpl = GameServiceImpl()
+    @StateObject var viewModel: WaitingRoomViewModel
+    
     @State var scale = 1.0
+    
+    init(viewModel: WaitingRoomViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
     var body: some View {
         ZStack {
             Text("Waiting for Players...")
@@ -49,8 +56,8 @@ struct WaitingRoomView: View {
     }
 }
 
-struct WaitingRoomView_Previews: PreviewProvider {
-    static var previews: some View {
-        WaitingRoomView()
-    }
-}
+//struct WaitingRoomView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WaitingRoomView()
+//    }
+//}

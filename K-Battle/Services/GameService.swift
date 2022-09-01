@@ -14,6 +14,8 @@ protocol GameService {
     func getGame() async throws -> [Game]
 }
 class GameServiceImpl: ObservableObject, GameService {
+    static let shared = GameServiceImpl()
+    
     func createNewGame() {
         //add players in a array
     }
