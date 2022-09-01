@@ -9,6 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var sessionService: SessionServiceImpl
+    @State var isActive: Bool = false
+  
     
     var body: some View {
         NavigationView {
@@ -25,13 +27,27 @@ struct HomeView: View {
                 Spacer()
                 HomeLogo()
                 Spacer()
-                ButtonView(title: "Join Game", background: Color.primaryColor) { print("joining game") }
+                HStack {
+                    InputTextFieldView(text: .constant(""), placeholder: "Join Game: Enter Code", keyboardType: .default, sfSymbol: nil)
+                    Image(systemName: "play.fill")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .foregroundColor(Color.primaryColor)
+                }
+             
+                NavigationLink(destination: NavigationLazyView(WaitingRoomView()), isActive: $isActive){
+                    ButtonView(title: "Random Game", background: Color.primaryColor) {
+                        isActive = true
+                    }
+                }.isDetailLink(false)
                 ButtonView(title: "Create Game", background: Color.primaryColor) { print("creating game") }
             }
             .padding()
             .background(Color(uiColor: UIColor.secondarySystemBackground))
             .navigationBarHidden(true)
         }
+        .environment(\.rootPresentationMode, self.$isActive)
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

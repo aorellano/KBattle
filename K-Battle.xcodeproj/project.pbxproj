@@ -50,6 +50,12 @@
 		D0E3326928C0192D006D0D77 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = D0E3326828C0192D006D0D77 /* SDWebImageSwiftUI */; };
 		D0E3326B28C01BA5006D0D77 /* WelcomeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3326A28C01BA5006D0D77 /* WelcomeHeader.swift */; };
 		D0E3326D28C01E81006D0D77 /* HomeLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3326C28C01E81006D0D77 /* HomeLogo.swift */; };
+		D0E3327028C0242B006D0D77 /* WaitingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3326F28C0242B006D0D77 /* WaitingRoomView.swift */; };
+		D0E3327328C0251A006D0D77 /* GameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3327228C0251A006D0D77 /* GameService.swift */; };
+		D0E3327628C0264A006D0D77 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3327528C0264A006D0D77 /* Game.swift */; };
+		D0E3327828C02A42006D0D77 /* NavigationLazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3327728C02A42006D0D77 /* NavigationLazyView.swift */; };
+		D0E3327A28C02A7C006D0D77 /* RootPresentationModeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3327928C02A7C006D0D77 /* RootPresentationModeKey.swift */; };
+		D0E3327C28C0390D006D0D77 /* WaitingRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3327B28C0390D006D0D77 /* WaitingRoomViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +110,12 @@
 		D0E3326528C0142A006D0D77 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		D0E3326A28C01BA5006D0D77 /* WelcomeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeHeader.swift; sourceTree = "<group>"; };
 		D0E3326C28C01E81006D0D77 /* HomeLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLogo.swift; sourceTree = "<group>"; };
+		D0E3326F28C0242B006D0D77 /* WaitingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomView.swift; sourceTree = "<group>"; };
+		D0E3327228C0251A006D0D77 /* GameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameService.swift; sourceTree = "<group>"; };
+		D0E3327528C0264A006D0D77 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		D0E3327728C02A42006D0D77 /* NavigationLazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLazyView.swift; sourceTree = "<group>"; };
+		D0E3327928C02A7C006D0D77 /* RootPresentationModeKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootPresentationModeKey.swift; sourceTree = "<group>"; };
+		D0E3327B28C0390D006D0D77 /* WaitingRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +178,9 @@
 		D0192A0B28BDE2ED009EC882 /* K-Battle */ = {
 			isa = PBXGroup;
 			children = (
+				D0E3327428C0260F006D0D77 /* Games */,
+				D0E3327128C02506006D0D77 /* Services */,
+				D0E3326E28C02363006D0D77 /* WaitingRoom */,
 				D0E3326428C0141E006D0D77 /* Home */,
 				D0E3325328BED40D006D0D77 /* Helpers */,
 				D0E3324C28BEC515006D0D77 /* Extensions */,
@@ -283,6 +298,8 @@
 			children = (
 				D0E3325428BED432006D0D77 /* FirebaseReference.swift */,
 				D0E3326028BF0CE8006D0D77 /* CreateValidator.swift */,
+				D0E3327728C02A42006D0D77 /* NavigationLazyView.swift */,
+				D0E3327928C02A7C006D0D77 /* RootPresentationModeKey.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -293,6 +310,31 @@
 				D0E3326528C0142A006D0D77 /* HomeView.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		D0E3326E28C02363006D0D77 /* WaitingRoom */ = {
+			isa = PBXGroup;
+			children = (
+				D0E3326F28C0242B006D0D77 /* WaitingRoomView.swift */,
+				D0E3327B28C0390D006D0D77 /* WaitingRoomViewModel.swift */,
+			);
+			path = WaitingRoom;
+			sourceTree = "<group>";
+		};
+		D0E3327128C02506006D0D77 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D0E3327228C0251A006D0D77 /* GameService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		D0E3327428C0260F006D0D77 /* Games */ = {
+			isa = PBXGroup;
+			children = (
+				D0E3327528C0264A006D0D77 /* Game.swift */,
+			);
+			path = Games;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -445,20 +487,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0E3324B28BEBA64006D0D77 /* RegisterView.swift in Sources */,
+				D0E3327C28C0390D006D0D77 /* WaitingRoomViewModel.swift in Sources */,
 				D0E3325028BECDCE006D0D77 /* RegistrationService.swift in Sources */,
 				D0192A0F28BDE2ED009EC882 /* ContentView.swift in Sources */,
 				D0E3326D28C01E81006D0D77 /* HomeLogo.swift in Sources */,
 				D0E3325928BEE4AE006D0D77 /* ImagePicker.swift in Sources */,
+				D0E3327028C0242B006D0D77 /* WaitingRoomView.swift in Sources */,
 				D0E3325728BED892006D0D77 /* RegistrationViewModel.swift in Sources */,
 				D0E3326628C0142A006D0D77 /* HomeView.swift in Sources */,
 				D0192A0D28BDE2ED009EC882 /* K_BattleApp.swift in Sources */,
 				D0192A3F28BE9E00009EC882 /* InputPasswordView.swift in Sources */,
+				D0E3327828C02A42006D0D77 /* NavigationLazyView.swift in Sources */,
+				D0E3327628C0264A006D0D77 /* Game.swift in Sources */,
 				D0E3326128BF0CE8006D0D77 /* CreateValidator.swift in Sources */,
 				D0E3326B28C01BA5006D0D77 /* WelcomeHeader.swift in Sources */,
 				D0E3325228BECE8B006D0D77 /* RegistrationDetails.swift in Sources */,
 				D0192A3D28BE9CB8009EC882 /* InputTextFieldView.swift in Sources */,
 				D0E3322D28BEA5E7006D0D77 /* LoginService.swift in Sources */,
+				D0E3327328C0251A006D0D77 /* GameService.swift in Sources */,
 				D0E3322A28BEA5BA006D0D77 /* LoginViewModel.swift in Sources */,
+				D0E3327A28C02A7C006D0D77 /* RootPresentationModeKey.swift in Sources */,
 				D0E3325B28BEE61A006D0D77 /* CloseModifier.swift in Sources */,
 				D0E3324E28BEC53D006D0D77 /* Color+Extension.swift in Sources */,
 				D0E3325528BED432006D0D77 /* FirebaseReference.swift in Sources */,
