@@ -25,7 +25,7 @@ struct K_BattleApp: App {
                         }
                     ContentView()
                         .tabItem {
-                            Label("Home", systemImage: "house")
+                            Label("Not Home", systemImage: "house")
                         }
           
                 }

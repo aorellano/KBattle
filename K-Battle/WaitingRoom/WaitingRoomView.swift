@@ -30,14 +30,14 @@ struct WaitingRoomView: View {
                     .font(.system(size: 20))
                     .foregroundColor(.gray)
             } else {
-                
+   
                 VStack {
                     
             ForEach((viewModel.game?.players.indices)!, id: \.self) { index in
                 let player = viewModel.game?.players[index]
                 
                 ProfilePicView(profilePic: player?["profilePic"], size: 100, cornerRadius: 50)
-                    
+                
                     .animation (Animation.spring(dampingFraction: 0.6)
                                     .repeatForever()
                                     .speed (.random(in: 0.05...0.4))
@@ -53,9 +53,9 @@ struct WaitingRoomView: View {
                     .position(CGPoint(x: .random(in: 40...325),
                                       y: .random(in: 15...700)))
                 
-            
+                }
                     
-            }
+                
                     Text("Waiting for Players...")
                         .font(.system(size: 20))
                         .foregroundColor(.gray)
@@ -63,16 +63,21 @@ struct WaitingRoomView: View {
                         Text(viewModel.game?.code ?? "No Code Available")
                         .fontWeight(.bold)
                         .foregroundColor(Color.primaryColor)
+                }
                         
+                
                 }
                 
-            }
+            
                 
                 
         }
         .alert("Oops no game available", isPresented: $showAlert) {
                     Button("OK", role: .cancel) {
-                        self.presentationMode.wrappedValue.dismiss()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.95) {
+                            self.presentationMode.wrappedValue.dismiss()
+                        }
+                        
                     }
         }
 
@@ -84,13 +89,17 @@ struct WaitingRoomView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(uiColor: UIColor.secondarySystemBackground))
         .onAppear {
-            if viewModel.game == nil {
-                showAlert = true
-            }
+       
+            
             print(showAlert)
             print(viewModel.game)
-            DispatchQueue.main.async {
-                self.scale = 1.2
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.50) {
+                if viewModel.game == nil {
+                    showAlert = true
+                } else {
+                    self.scale = 1.2
+                }
+                
             }
         }
         

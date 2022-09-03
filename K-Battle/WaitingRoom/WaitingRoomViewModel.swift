@@ -17,8 +17,10 @@ class WaitingRoomViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
     
     init(with gameType: GameType, sessionService: SessionServiceImpl) {
+        game = nil
         self.gameType = gameType
         self.sessionService = sessionService
+        
         setupGame(with: gameType)
     }
     
@@ -38,9 +40,12 @@ class WaitingRoomViewModel: ObservableObject {
             print("Joining Random Game")
         case .JoinGame(let code):
             GameServiceImpl.shared.joinGame(with: sessionService.userDetails ?? SessionUserDetails(id: "", username: "", profilePic: ""), and: code)
-            GameServiceImpl.shared.$game
-                .assign(to: \.game, on: self)
-                .store(in: &cancellables)
+            print(game)
+         
+                GameServiceImpl.shared.$game
+                    .assign(to: \.game, on: self)
+                    .store(in: &cancellables)
+            print("nil: \(game)")
             print("Joining game with \(code)")
         }
     }

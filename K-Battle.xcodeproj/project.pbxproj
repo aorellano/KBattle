@@ -180,6 +180,7 @@
 		D0192A0B28BDE2ED009EC882 /* K-Battle */ = {
 			isa = PBXGroup;
 			children = (
+				D0C4DDD928C3F11200161617 /* Settings */,
 				D0E3327428C0260F006D0D77 /* Games */,
 				D0E3327128C02506006D0D77 /* Services */,
 				D0E3326E28C02363006D0D77 /* WaitingRoom */,
@@ -247,6 +248,13 @@
 				D0E3326C28C01E81006D0D77 /* HomeLogo.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		D0C4DDD928C3F11200161617 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		D0E3322628BEA599006D0D77 /* View */ = {

@@ -68,7 +68,10 @@ struct HomeView: View {
                 }
                     
             }
-            
+            .introspectTabBarController { (UITabBarController) in
+                UITabBarController.tabBar.isHidden = false
+                tabBarController = UITabBarController
+            }
             .onAppear { print("id: \(UUID().uuidString.prefix(6))") }
             .padding()
             .background(Color(uiColor: UIColor.secondarySystemBackground))
@@ -78,12 +81,9 @@ struct HomeView: View {
         
         
         
-        .introspectTabBarController { (UITabBarController) in
-            UITabBarController.tabBar.isHidden = false
-            tabBarController = UITabBarController
-        }
         
-        //.environment(\.rootPresentationMode, self.$isActive)
+        
+        .environment(\.rootPresentationMode, self.$isActive)
         .navigationViewStyle(StackNavigationViewStyle())
         
     }

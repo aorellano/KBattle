@@ -20,6 +20,7 @@ class GameServiceImpl: ObservableObject, GameService {
     static let shared = GameServiceImpl()
     @Published var game: Game!
     
+    init() { }
     func createNewGame(with user: SessionUserDetails) {
         print("Creating game for \(user.id)")
         let userInfo = ["id": user.id, "profilePic": user.profilePic, "username": user.username]
@@ -95,7 +96,7 @@ class GameServiceImpl: ObservableObject, GameService {
             
                 
             } else {
-                gameAvailable = false
+                self.game = nil
             }
             
             
