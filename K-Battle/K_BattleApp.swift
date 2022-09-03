@@ -23,6 +23,11 @@ struct K_BattleApp: App {
                         .tabItem {
                             Label("Home", systemImage: "house")
                         }
+                    ContentView()
+                        .tabItem {
+                            Label("Home", systemImage: "house")
+                        }
+          
                 }
                 case .loggedOut:
                     LoginView()

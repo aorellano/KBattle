@@ -6,13 +6,17 @@
 //
 
 import SwiftUI
+import Introspect
 
 struct HomeView: View {
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+    @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
     @EnvironmentObject var sessionService: SessionServiceImpl
     @State var isActive: Bool = false
     @State var gameType: GameType? = nil
+    @State var tabBarController: UITabBarController?
+    @State var code = ""
   
-    
     var body: some View {
 
         NavigationView {
@@ -31,13 +35,14 @@ struct HomeView: View {
                 HomeLogo()
                 Spacer()
                 HStack {
-                    InputTextFieldView(text: .constant(""), placeholder: "Join Game: Enter Code", keyboardType: .default, sfSymbol: nil)
+                    InputTextFieldView(text: $code, placeholder: "Join Game: Enter Code", keyboardType: .default, sfSymbol: nil)
                     Image(systemName: "play.fill")
                         .resizable()
                         .frame(width: 20, height: 20)
                         .foregroundColor(Color.primaryColor)
                         .onTapGesture {
-                            gameType = .JoinGame(with: "code")
+                            gameType = .JoinGame(with: code)
+                            print("code: \(code)")
                             isActive = true
                         }
                 }
@@ -52,17 +57,33 @@ struct HomeView: View {
                     gameType = .NewGame
                     isActive = true
                 }
+                
                 if gameType != nil {
-                NavigationLink(destination: NavigationLazyView(WaitingRoomView(viewModel: WaitingRoomViewModel(with: gameType ?? .JoinRandomGame))), isActive: $isActive){
+                    NavigationLink(destination: NavigationLazyView(WaitingRoomView(viewModel:
+                                                                                    WaitingRoomViewModel(with: gameType ?? .NewGame, sessionService: sessionService))), isActive: $isActive){
                     EmptyView()
                 }.isDetailLink(false)
+                    
+              
+                }
+                    
             }
-            }.onAppear { print("Hi") }
+            
+            .onAppear { print("id: \(UUID().uuidString.prefix(6))") }
             .padding()
             .background(Color(uiColor: UIColor.secondarySystemBackground))
             .navigationBarHidden(true)
+            
         }
-        .environment(\.rootPresentationMode, self.$isActive)
+        
+        
+        
+        .introspectTabBarController { (UITabBarController) in
+            UITabBarController.tabBar.isHidden = false
+            tabBarController = UITabBarController
+        }
+        
+        //.environment(\.rootPresentationMode, self.$isActive)
         .navigationViewStyle(StackNavigationViewStyle())
         
     }

@@ -7,9 +7,12 @@
 
 import Foundation
 
-struct Game {
+struct Game: Codable, Identifiable, Hashable {
     let id: String
     let players: [[String:String]]
+    let isPrivate: Bool
+    let hasStarted: Bool
+    let code: String
 }
 
 enum GameStatus {

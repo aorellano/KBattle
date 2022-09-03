@@ -12,21 +12,35 @@ struct ProfilePicView: View {
     let profilePic: String?
     let size: CGFloat
     let cornerRadius: CGFloat
+    @State var scale = 1.0
     
     var body: some View {
+        ZStack {
         if let pic = profilePic {
+           
             WebImage(url: URL(string: pic))
+            
+                .placeholder(Image(systemName: "person.fill"))
                 .resizable()
+                
                 .scaledToFill()
+
                 .frame(width: size, height: size)
+                .clipped()
                 .cornerRadius(cornerRadius)
                 .overlay(RoundedRectangle(cornerRadius: cornerRadius)
                 .stroke(Color.gray, lineWidth: 0.1))
+                
+                
         } else {
             Image(systemName: "person.fill")
                 .font(.system(size: size, weight: .light))
                 .foregroundColor(.white)
         }
+        }
+            
+            
+ 
 //        if profilePic == "minnie" {
 //            Image("minnie")
 ////                .font(.system(size: size, weight: .light))
