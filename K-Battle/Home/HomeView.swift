@@ -67,12 +67,15 @@ struct HomeView: View {
               
                 }
                     
-            }
-            .introspectTabBarController { (UITabBarController) in
+            }.introspectTabBarController { (UITabBarController) in
                 UITabBarController.tabBar.isHidden = false
                 tabBarController = UITabBarController
             }
-            .onAppear { print("id: \(UUID().uuidString.prefix(6))") }
+            
+            .onAppear {
+                print("id: \(UUID().uuidString.prefix(6))")
+                tabBarController?.tabBar.isHidden = false
+            }
             .padding()
             .background(Color(uiColor: UIColor.secondarySystemBackground))
             .navigationBarHidden(true)

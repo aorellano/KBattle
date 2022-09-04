@@ -15,6 +15,8 @@ struct WaitingRoomView: View {
     @StateObject var viewModel: WaitingRoomViewModel
     @State var tabBarController: UITabBarController?
     @State var showAlert: Bool = false
+    @State var isPrivate: Bool = true
+    @State var privateButtonColor: Color = Color.primaryColor
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     
     @State var scale = 1.0
@@ -31,12 +33,47 @@ struct WaitingRoomView: View {
                     .foregroundColor(.gray)
             } else {
    
+                Spacer()
                 VStack {
-                    
+                    Spacer()
+                    Text("Waiting for Players...")
+                        .font(.system(size: 20))
+                        .foregroundColor(.gray)
+                    Spacer()
+                    HStack {
+                        ButtonView(title: "Private", background: privateButtonColor) {
+                            isPrivate.toggle()
+                            if isPrivate == true {
+                                privateButtonColor = Color.primaryColor
+                            } else {
+                                privateButtonColor = Color.gray
+                            }
+                                
+                        }
+                        .frame(width: 100, height: 50)
+                        Spacer()
+                        Text(viewModel.game?.code ?? "No Code Available")
+                        .fontWeight(.bold)
+                        .foregroundColor(Color.primaryColor)
+                        Spacer()
+                        ButtonView(title: "Start", background: Color.primaryColor) {
+                            print("Starting game")
+                           
+                                
+                        }
+                        .frame(width: 100, height: 50)
+                    }
+                    .padding()
+                }
             ForEach((viewModel.game?.players.indices)!, id: \.self) { index in
                 let player = viewModel.game?.players[index]
                 
+                VStack {
                 ProfilePicView(profilePic: player?["profilePic"], size: 100, cornerRadius: 50)
+                Text("Jihyo")
+                        .font(.system(size: 10))
+                        .multilineTextAlignment(.center)
+                }
                 
                     .animation (Animation.spring(dampingFraction: 0.6)
                                     .repeatForever()
@@ -51,19 +88,11 @@ struct WaitingRoomView: View {
                            alignment: .center)
                     
                     .position(CGPoint(x: .random(in: 40...325),
-                                      y: .random(in: 15...700)))
+                                      y: .random(in: 15...400)))
                 
                 }
                     
                 
-                    Text("Waiting for Players...")
-                        .font(.system(size: 20))
-                        .foregroundColor(.gray)
-                    Spacer()
-                        Text(viewModel.game?.code ?? "No Code Available")
-                        .fontWeight(.bold)
-                        .foregroundColor(Color.primaryColor)
-                }
                         
                 
                 }
@@ -71,6 +100,9 @@ struct WaitingRoomView: View {
             
                 
                 
+        }.introspectTabBarController { (UITabBarController) in
+            UITabBarController.tabBar.isHidden = true
+            tabBarController = UITabBarController
         }
         .alert("Oops no game available", isPresented: $showAlert) {
                     Button("OK", role: .cancel) {
@@ -80,19 +112,23 @@ struct WaitingRoomView: View {
                         
                     }
         }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: Button(action : {
+   
+                self.presentationMode.wrappedValue.dismiss()
+            
+            
+        }){
+            Image(systemName: "arrow.left")
+        })
 
     
-        .introspectTabBarController { (UITabBarController) in
-            UITabBarController.tabBar.isHidden = true
-            tabBarController = UITabBarController
-        }
+        
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(uiColor: UIColor.secondarySystemBackground))
         .onAppear {
        
-            
             print(showAlert)
-            print(viewModel.game)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.50) {
                 if viewModel.game == nil {
                     showAlert = true
@@ -102,7 +138,6 @@ struct WaitingRoomView: View {
                 
             }
         }
-        
         
     }
         

@@ -73,9 +73,14 @@ class GameServiceImpl: ObservableObject, GameService {
 //                self.updateUser(id: user.id, with: self.game.id)
                 self.listenForGameChanges(self.game)
             }
-            
+            print("the game: \(self.game)")
             let gameRef = FirebaseReference(.game).document(self.game.id)
-            gameRef.updateData(["players": FieldValue.arrayUnion([["id":userInfo["id"], "profilePic":userInfo["profilePic"], "username":userInfo["username"]]])])
+            gameRef.updateData(["players": FieldValue.arrayUnion([["id":userInfo["id"], "profilePic":userInfo["profilePic"], "username":userInfo["username"]]])]) { error in
+                if let err = error {
+                    print("error: \(err)")
+                    return
+                }
+            }
            
         }
     }

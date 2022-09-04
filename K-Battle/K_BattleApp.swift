@@ -23,9 +23,9 @@ struct K_BattleApp: App {
                         .tabItem {
                             Label("Home", systemImage: "house")
                         }
-                    ContentView()
+                    SettingsView()
                         .tabItem {
-                            Label("Not Home", systemImage: "house")
+                            Label("Settings", systemImage: "gear")
                         }
           
                 }

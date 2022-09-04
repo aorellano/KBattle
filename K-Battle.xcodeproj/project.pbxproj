@@ -19,6 +19,8 @@
 		D0192A3D28BE9CB8009EC882 /* InputTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0192A3C28BE9CB8009EC882 /* InputTextFieldView.swift */; };
 		D0192A3F28BE9E00009EC882 /* InputPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0192A3E28BE9E00009EC882 /* InputPasswordView.swift */; };
 		D067A65228C2AA5500DBA4C7 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = D067A65128C2AA5500DBA4C7 /* Introspect */; };
+		D0C4DDDB28C3F14C00161617 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C4DDDA28C3F14C00161617 /* SettingsView.swift */; };
+		D0C4DDDE28C3FE9A00161617 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = D0C4DDDD28C3FE9A00161617 /* Introspect */; };
 		D0E3322528BE9FE1006D0D77 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3322428BE9FE1006D0D77 /* ButtonView.swift */; };
 		D0E3322A28BEA5BA006D0D77 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3322928BEA5BA006D0D77 /* LoginViewModel.swift */; };
 		D0E3322D28BEA5E7006D0D77 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3322C28BEA5E7006D0D77 /* LoginService.swift */; };
@@ -91,6 +93,7 @@
 		D0192A3928BE9C29009EC882 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		D0192A3C28BE9CB8009EC882 /* InputTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextFieldView.swift; sourceTree = "<group>"; };
 		D0192A3E28BE9E00009EC882 /* InputPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPasswordView.swift; sourceTree = "<group>"; };
+		D0C4DDDA28C3F14C00161617 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D0E3322428BE9FE1006D0D77 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		D0E3322928BEA5BA006D0D77 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D0E3322C28BEA5E7006D0D77 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
@@ -135,6 +138,7 @@
 				D0E3323628BEA7C3006D0D77 /* FirebaseAuth in Frameworks */,
 				D0E3323A28BEA7C3006D0D77 /* FirebaseFirestore in Frameworks */,
 				D0E3324628BEA7C3006D0D77 /* FirebaseStorage in Frameworks */,
+				D0C4DDDE28C3FE9A00161617 /* Introspect in Frameworks */,
 				D0E3323228BEA7C3006D0D77 /* FirebaseAnalytics in Frameworks */,
 				D0E3323C28BEA7C3006D0D77 /* FirebaseFirestoreSwift in Frameworks */,
 			);
@@ -253,6 +257,7 @@
 		D0C4DDD928C3F11200161617 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				D0C4DDDA28C3F14C00161617 /* SettingsView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -377,6 +382,7 @@
 				D0E3324528BEA7C3006D0D77 /* FirebaseStorage */,
 				D0E3326828C0192D006D0D77 /* SDWebImageSwiftUI */,
 				D067A65128C2AA5500DBA4C7 /* Introspect */,
+				D0C4DDDD28C3FE9A00161617 /* Introspect */,
 			);
 			productName = "K-Battle";
 			productReference = D0192A0928BDE2ED009EC882 /* K-Battle.app */;
@@ -454,6 +460,7 @@
 				D0E3323028BEA7C3006D0D77 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				D0E3326728C0192D006D0D77 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				D067A65028C2AA5400DBA4C7 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+				D0C4DDDC28C3FE9A00161617 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = D0192A0A28BDE2ED009EC882 /* Products */;
 			projectDirPath = "";
@@ -527,6 +534,7 @@
 				D0E3325F28BEEEDC006D0D77 /* SessionUserDetails.swift in Sources */,
 				D0192A3728BDF13B009EC882 /* ProfilePicView.swift in Sources */,
 				D0E3322528BE9FE1006D0D77 /* ButtonView.swift in Sources */,
+				D0C4DDDB28C3F14C00161617 /* SettingsView.swift in Sources */,
 				D0E3325D28BEEE5B006D0D77 /* SessionService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -863,6 +871,14 @@
 				kind = branch;
 			};
 		};
+		D0C4DDDC28C3FE9A00161617 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
 		D0E3323028BEA7C3006D0D77 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -885,6 +901,11 @@
 		D067A65128C2AA5500DBA4C7 /* Introspect */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D067A65028C2AA5400DBA4C7 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
+		};
+		D0C4DDDD28C3FE9A00161617 /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0C4DDDC28C3FE9A00161617 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
 			productName = Introspect;
 		};
 		D0E3323128BEA7C3006D0D77 /* FirebaseAnalytics */ = {
