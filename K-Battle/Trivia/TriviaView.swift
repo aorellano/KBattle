@@ -9,6 +9,11 @@ import SwiftUI
 
 struct TriviaView: View {
     @State var timeRemaining = 15
+    @StateObject var viewModel: TriviaViewModel
+    
+    init(viewModel: TriviaViewModel = .init()) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         VStack {
@@ -21,6 +26,8 @@ struct TriviaView: View {
             ProgressBar(progress: CGFloat(timeRemaining*20))
                 .padding(.bottom, 40)
             Text("Guess the Song")
+                .fontWeight(.bold)
+                .font(.system(size: 20))
             Spacer()
            
             ZStack {
@@ -30,17 +37,26 @@ struct TriviaView: View {
                     .offset(y: 150)
                     .rotationEffect(.degrees(1 * Double(i)))
             }
+            
             HStack(spacing: 4) {
                 ForEach(0..<4) { _ in
                     Bar(maxHeight: 75, minHeight: 10, width: 15)
                 }
             }
             
-            }
+            }.padding()
+            
                 
             Spacer()
+            ForEach(viewModel.answers) { answer in
+                AnswerRow(answer, viewModel)
+            }
+            .padding([.leading, .trailing], 15)
             
+        }.task {
+            await viewModel.fetchSongs()
         }
+       
         .navigationBarHidden(true)
         .background(Color(uiColor: UIColor.secondarySystemBackground))
     }
@@ -58,7 +74,7 @@ struct Bar: View {
             RoundedRectangle(cornerRadius: width/2)
                 .frame(width: width, height: height)
                 .animation(.easeInOut(duration: animationSpeed), value: 1.2)
-                .foregroundColor(Color.primaryColor)
+                .foregroundColor(.green)
                 .onAppear {
                     Timer.scheduledTimer(withTimeInterval: animationSpeed, repeats: true) {_ in
                         height = CGFloat.random(in: minHeight...maxHeight)

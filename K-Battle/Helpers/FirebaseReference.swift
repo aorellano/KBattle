@@ -11,7 +11,7 @@ import Firebase
 enum FCollectionReference: String {
     case users
     case game
-    
+    case questions
 }
 
 func FirebaseReference(_ collectionReference: FCollectionReference) -> CollectionReference {
