@@ -7,12 +7,14 @@
 
 import Foundation
 
-enum GameState{
-    case waitingForPlayers
-    case newPlayerAdded
+enum GameState {
+    case gameStarted
+    case gameEnded
+    case hasntStarted
 }
 
 struct GameNotification {
-    static let waitingForPlayers = "Waiting for more players to enter game"
-    static let newPlayerAdded = "New player has been added to the game"
+    static let gameStarted = "The game has started"
+    static let gameEnded = "The game has ended"
+    static let hasntStarted = "The game has not started yet"
 }

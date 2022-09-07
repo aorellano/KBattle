@@ -62,15 +62,17 @@ struct WaitingRoomView: View {
                         .foregroundColor(Color.primaryColor)
                         Spacer()
                         if sessionService.userDetails?.id == viewModel.game?.host ?? "" {
-                            NavigationLink(destination: NavigationLazyView(TriviaView()), isActive: $isActive){
+                            
                         ButtonView(title: "Start", background: Color.primaryColor) {
                             print("Starting game")
+                            viewModel.startGame()
                                 isActive = true
+                        
                                 
                         
                             }
                         .frame(width: 100, height: 50)
-                            }.isDetailLink(false)
+                            
                         }
                     }
                     .padding()
@@ -101,6 +103,9 @@ struct WaitingRoomView: View {
                 
                 }
                 }
+        NavigationLink(destination: NavigationLazyView(TriviaView()), isActive: $isActive){
+            EmptyView()
+        }.isDetailLink(false)
         }.introspectTabBarController { (UITabBarController) in
             UITabBarController.tabBar.isHidden = true
             tabBarController = UITabBarController
@@ -124,9 +129,14 @@ struct WaitingRoomView: View {
                 }
             }
             
-            print(viewModel.game?.players)
+            if viewModel.gameNotification == GameNotification.gameStarted {
+                isActive = true
+                print("the game has started")
+            }
             
+            print(viewModel.game?.players)
         }
+      
         .onDisappear {
             print("User is leaving")
         }
@@ -140,6 +150,7 @@ struct WaitingRoomView: View {
             Image(systemName: "arrow.left")
         })
         
+  
         
 
     

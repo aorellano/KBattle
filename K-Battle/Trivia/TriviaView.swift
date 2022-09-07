@@ -25,9 +25,11 @@ struct TriviaView: View {
             .padding([.top, .leading, .trailing], 20)
             ProgressBar(progress: CGFloat(timeRemaining*20))
                 .padding(.bottom, 40)
+           
             Text("Guess the Song")
                 .fontWeight(.bold)
                 .font(.system(size: 20))
+            
             Spacer()
            
             ZStack {
@@ -37,6 +39,7 @@ struct TriviaView: View {
                     .offset(y: 150)
                     .rotationEffect(.degrees(1 * Double(i)))
             }
+       
             
             HStack(spacing: 4) {
                 ForEach(0..<4) { _ in

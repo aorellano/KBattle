@@ -12,7 +12,7 @@ struct Game: Codable, Identifiable, Hashable {
     let host: String
     let players: [[String:String]]
     var isPrivate: Bool
-    let hasStarted: Bool
+    var hasStarted: Bool
     let code: String
 }
 
@@ -21,3 +21,4 @@ enum GameStatus {
     case waiting
     case ended
 }
+

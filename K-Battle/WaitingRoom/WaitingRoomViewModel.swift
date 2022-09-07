@@ -14,10 +14,10 @@ class WaitingRoomViewModel: ObservableObject {
     var gameType: GameType
     var sessionService: SessionServiceImpl
     var playerCount = 0
-    @Published var gameNotification = GameNotification.waitingForPlayers
+    @Published var gameNotification = GameNotification.hasntStarted
     @Published var game: Game? {
         didSet {
-            updateGameNotificationForGame()
+            updateGameNotificationForGame(game)
         }
     }
     private var cancellables: Set<AnyCancellable> = []
@@ -56,9 +56,9 @@ class WaitingRoomViewModel: ObservableObject {
         }
     }
     
-    func updateGameNotificationForGame() {
-        if game?.players.count != playerCount {
-            gameNotification = GameNotification.newPlayerAdded
+    func updateGameNotificationForGame(_ state: Game?) {
+        if game?.hasStarted == true {
+            gameNotification = GameNotification.gameStarted
         }
     }
     
@@ -70,5 +70,10 @@ class WaitingRoomViewModel: ObservableObject {
     func removePlayer() {
         guard let details = sessionService.userDetails else { return }
         GameServiceImpl.shared.removePlayer(with: details, for: self.game!.id)
+    }
+    
+    func startGame() {
+        GameServiceImpl.shared.game.hasStarted = true
+        GameServiceImpl.shared.updateGame(self.game!)
     }
 }
