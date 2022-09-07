@@ -18,6 +18,7 @@ struct WaitingRoomView: View {
     @State var isPrivate: Bool = true
     @State var privateButtonColor: Color = Color.primaryColor
     @State var toggleScale: Bool = false
+    @State var isActive: Bool = false
     @EnvironmentObject var sessionService: SessionServiceImpl
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     
@@ -61,12 +62,15 @@ struct WaitingRoomView: View {
                         .foregroundColor(Color.primaryColor)
                         Spacer()
                         if sessionService.userDetails?.id == viewModel.game?.host ?? "" {
+                            NavigationLink(destination: NavigationLazyView(TriviaView()), isActive: $isActive){
                         ButtonView(title: "Start", background: Color.primaryColor) {
                             print("Starting game")
-                           
+                                isActive = true
                                 
-                        }
+                        
+                            }
                         .frame(width: 100, height: 50)
+                            }.isDetailLink(false)
                         }
                     }
                     .padding()

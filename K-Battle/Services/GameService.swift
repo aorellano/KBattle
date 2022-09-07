@@ -105,6 +105,14 @@ class GameServiceImpl: ObservableObject, GameService {
         gameRef.updateData(["players": FieldValue.arrayRemove([["id":userInfo["id"], "profilePic":userInfo["profilePic"], "username":userInfo["username"]]])])
         
     }
+    
+    func removePlayer(with id: String, for game: String) {
+       // let userInfo = ["id": info.id, "profilePic": info.profilePic, "username": info.username]
+        
+        let gameRef = FirebaseReference(.game).document(game)
+        gameRef.updateData(["players": FieldValue.arrayRemove([["id":id]])])
+        
+    }
 }
 
 //when the host leaves the game a new host should be assigned

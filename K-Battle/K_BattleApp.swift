@@ -28,7 +28,7 @@ struct K_BattleApp: App {
                         .tabItem {
                             Label("Settings", systemImage: "gear")
                         }
-          
+                        
                 }
                 case .loggedOut:
                     LoginView()
@@ -45,7 +45,15 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     func applicationWillTerminate(_ application: UIApplication) {
         print("Terminating")
-        //when a user is terminating the app they should be kicked from the game
+        //remove player from the game
+        
+//        guard let game = GameServiceImpl.shared.game else { return }
+//        guard let user = Auth.auth().currentUser?.uid else { return }
+//
+//        GameServiceImpl.shared.removePlayer(with: user, for: game.id)
+//        GameServiceImpl.shared.updateGame(GameServiceImpl.shared.game)
+//        print("Game Id: \(game)")
+//        print("User: \(user)")
     }
     
     
