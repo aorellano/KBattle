@@ -13,7 +13,13 @@ import AVFoundation
 class WaitingRoomViewModel: ObservableObject {
     var gameType: GameType
     var sessionService: SessionServiceImpl
-    @Published var game: Game?
+    var playerCount = 0
+    @Published var gameNotification = GameNotification.waitingForPlayers
+    @Published var game: Game? {
+        didSet {
+            updateGameNotificationForGame()
+        }
+    }
     private var cancellables: Set<AnyCancellable> = []
     
     init(with gameType: GameType, sessionService: SessionServiceImpl) {
@@ -32,6 +38,8 @@ class WaitingRoomViewModel: ObservableObject {
                 .assign(to: \.game, on: self)
                 .store(in: &cancellables)
             print("Starting New Game")
+            guard let players = self.game?.players.count else { return }
+            playerCount = players
         case .JoinRandomGame:
             GameServiceImpl.shared.joinGame(with: sessionService.userDetails ?? SessionUserDetails(id: "", username: "", profilePic: ""))
             GameServiceImpl.shared.$game
@@ -40,13 +48,27 @@ class WaitingRoomViewModel: ObservableObject {
             print("Joining Random Game")
         case .JoinGame(let code):
             GameServiceImpl.shared.joinGame(with: sessionService.userDetails ?? SessionUserDetails(id: "", username: "", profilePic: ""), and: code)
-         
-         
                 GameServiceImpl.shared.$game
                     .assign(to: \.game, on: self)
                     .store(in: &cancellables)
-       
+            
             print("Joining game with \(code)")
         }
+    }
+    
+    func updateGameNotificationForGame() {
+        if game?.players.count != playerCount {
+            gameNotification = GameNotification.newPlayerAdded
+        }
+    }
+    
+    func makeGamePrivate() {
+        game?.isPrivate.toggle()
+        GameServiceImpl.shared.updateGame(self.game!)
+    }
+    
+    func removePlayer() {
+        guard let details = sessionService.userDetails else { return }
+        GameServiceImpl.shared.removePlayer(with: details, for: self.game!.id)
     }
 }

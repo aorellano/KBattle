@@ -22,7 +22,7 @@ struct CreateValidator {
             throw CreateValidatorError.invalidPassword
         }
         
-        if user.profilePicUrl.isEmpty {
+        if pic == nil {
             throw CreateValidatorError.invalidProfilePic
         }
     }

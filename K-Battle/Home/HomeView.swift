@@ -60,7 +60,7 @@ struct HomeView: View {
                 
                 if gameType != nil {
                     NavigationLink(destination: NavigationLazyView(WaitingRoomView(viewModel:
-                                                                                    WaitingRoomViewModel(with: gameType ?? .NewGame, sessionService: sessionService))), isActive: $isActive){
+                                                                                    WaitingRoomViewModel(with: gameType ?? .NewGame, sessionService: sessionService)).environmentObject(sessionService)), isActive: $isActive){
                     EmptyView()
                 }.isDetailLink(false)
                     
@@ -75,6 +75,9 @@ struct HomeView: View {
             .onAppear {
                 print("id: \(UUID().uuidString.prefix(6))")
                 tabBarController?.tabBar.isHidden = false
+            }
+            .onDisappear {
+                code = ""
             }
             .padding()
             .background(Color(uiColor: UIColor.secondarySystemBackground))

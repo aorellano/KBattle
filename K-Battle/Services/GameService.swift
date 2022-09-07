@@ -25,7 +25,7 @@ class GameServiceImpl: ObservableObject, GameService {
         print("Creating game for \(user.id)")
         let userInfo = ["id": user.id, "profilePic": user.profilePic, "username": user.username]
         let gameCode = UUID().uuidString.prefix(6)
-        self.game = Game(id: UUID().uuidString, players: [["profilePic": userInfo["profilePic"]!, "username": userInfo["username"]!]], isPrivate: true, hasStarted: false, code: String(gameCode))
+        self.game = Game(id: UUID().uuidString, host: user.id, players: [["id": userInfo["id"]!, "profilePic": userInfo["profilePic"]!, "username": userInfo["username"]!]], isPrivate: true, hasStarted: false, code: String(gameCode))
         self.updateGame(self.game)
         self.createOnlineGame()
         self.listenForGameChanges(self.game)
@@ -62,58 +62,49 @@ class GameServiceImpl: ObservableObject, GameService {
  
     func joinGame(with user: SessionUserDetails) {
         let userInfo = ["id": user.id, "profilePic": user.profilePic, "username": user.username]
-        FirebaseReference(.game).whereField("hasStarted", isEqualTo: false).getDocuments { querySnapshot, error in
+        FirebaseReference(.game).whereField("hasStarted", isEqualTo: false).whereField("isPrivate", isEqualTo: false).getDocuments { [self] querySnapshot, error in
             if let gameData = querySnapshot?.documents.first {
                 self.game = try? gameData.data(as: Game.self)
-                print(self.game)
-//                self.game.player2 = player1
-//                self.game.blockPlayerId = player1["id"] ?? ""
-                
                 self.updateGame(self.game)
-//                self.updateUser(id: user.id, with: self.game.id)
                 self.listenForGameChanges(self.game)
+                addPlayer(userInfo, to: game)
+                print("The game has been found")
+            } else {
+                self.game = nil
             }
-            print("the game: \(self.game)")
-            let gameRef = FirebaseReference(.game).document(self.game.id)
-            gameRef.updateData(["players": FieldValue.arrayUnion([["id":userInfo["id"], "profilePic":userInfo["profilePic"], "username":userInfo["username"]]])]) { error in
-                if let err = error {
-                    print("error: \(err)")
-                    return
-                }
-            }
-           
+            
         }
     }
     
     func joinGame(with user: SessionUserDetails, and code: String) -> Bool {
         let userInfo = ["id": user.id, "profilePic": user.profilePic, "username": user.username]
         var gameAvailable = true
-        FirebaseReference(.game).whereField("code", isEqualTo: code).getDocuments { querySnapshot, error in
+        FirebaseReference(.game).whereField("code", isEqualTo: code).getDocuments { [self] querySnapshot, error in
             if let gameData = querySnapshot?.documents.first {
                 self.game = try? gameData.data(as: Game.self)
-                print(self.game)
-//                self.game.player2 = player1
-//                self.game.blockPlayerId = player1["id"] ?? ""
-                
                 self.updateGame(self.game)
-//                self.updateUser(id: user.id, with: self.game.id)
                 self.listenForGameChanges(self.game)
-            
-                
+                addPlayer(userInfo, to: self.game)
             } else {
                 self.game = nil
             }
-            
-            
-//            let gameRef = FirebaseReference(.game).document(self.game.id)
-//            gameRef.updateData(["players": FieldValue.arrayUnion([["id":userInfo["id"], "profilePic":userInfo["profilePic"], "username":userInfo["username"]]])])
-            
-            
         }
         return gameAvailable
     }
     
+    func addPlayer(_ info: [String:String], to game: Game) {
+        let gameRef = FirebaseReference(.game).document(game.id)
+        gameRef.updateData(["players": FieldValue.arrayUnion([["id":info["id"], "profilePic":info["profilePic"], "username":info["username"]]])])
+    }
+    
 
- 
+    func removePlayer(with info: SessionUserDetails, for game: String) {
+        let userInfo = ["id": info.id, "profilePic": info.profilePic, "username": info.username]
+        
+        let gameRef = FirebaseReference(.game).document(game)
+        gameRef.updateData(["players": FieldValue.arrayRemove([["id":userInfo["id"], "profilePic":userInfo["profilePic"], "username":userInfo["username"]]])])
+        
+    }
 }
 
+//when the host leaves the game a new host should be assigned

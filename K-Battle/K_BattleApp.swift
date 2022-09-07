@@ -24,6 +24,7 @@ struct K_BattleApp: App {
                             Label("Home", systemImage: "house")
                         }
                     SettingsView()
+                        .environmentObject(sessionService)
                         .tabItem {
                             Label("Settings", systemImage: "gear")
                         }
@@ -41,4 +42,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         FirebaseApp.configure()
         return true
     }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        print("Terminating")
+        //when a user is terminating the app they should be kicked from the game
+    }
+    
+    
 }

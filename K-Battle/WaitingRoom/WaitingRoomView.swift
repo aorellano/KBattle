@@ -17,6 +17,8 @@ struct WaitingRoomView: View {
     @State var showAlert: Bool = false
     @State var isPrivate: Bool = true
     @State var privateButtonColor: Color = Color.primaryColor
+    @State var toggleScale: Bool = false
+    @EnvironmentObject var sessionService: SessionServiceImpl
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     
     @State var scale = 1.0
@@ -41,6 +43,7 @@ struct WaitingRoomView: View {
                         .foregroundColor(.gray)
                     Spacer()
                     HStack {
+                        if sessionService.userDetails?.id == viewModel.game?.host ?? "" {
                         ButtonView(title: "Private", background: privateButtonColor) {
                             isPrivate.toggle()
                             if isPrivate == true {
@@ -48,20 +51,23 @@ struct WaitingRoomView: View {
                             } else {
                                 privateButtonColor = Color.gray
                             }
-                                
+                            viewModel.makeGamePrivate()
                         }
                         .frame(width: 100, height: 50)
+                        }
                         Spacer()
                         Text(viewModel.game?.code ?? "No Code Available")
                         .fontWeight(.bold)
                         .foregroundColor(Color.primaryColor)
                         Spacer()
+                        if sessionService.userDetails?.id == viewModel.game?.host ?? "" {
                         ButtonView(title: "Start", background: Color.primaryColor) {
                             print("Starting game")
                            
                                 
                         }
                         .frame(width: 100, height: 50)
+                        }
                     }
                     .padding()
                 }
@@ -70,11 +76,10 @@ struct WaitingRoomView: View {
                 
                 VStack {
                 ProfilePicView(profilePic: player?["profilePic"], size: 100, cornerRadius: 50)
-                Text("Jihyo")
+                Text(player?["username"] ?? "No Name")
                         .font(.system(size: 10))
                         .multilineTextAlignment(.center)
                 }
-                
                     .animation (Animation.spring(dampingFraction: 0.6)
                                     .repeatForever()
                                     .speed (.random(in: 0.05...0.4))
@@ -91,36 +96,47 @@ struct WaitingRoomView: View {
                                       y: .random(in: 15...400)))
                 
                 }
-                    
-                
-                        
-                
                 }
-                
-            
-                
-                
         }.introspectTabBarController { (UITabBarController) in
             UITabBarController.tabBar.isHidden = true
             tabBarController = UITabBarController
         }
         .alert("Oops no game available", isPresented: $showAlert) {
                     Button("OK", role: .cancel) {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.95) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                             self.presentationMode.wrappedValue.dismiss()
                         }
                         
                     }
         }
+        .onChange(of: viewModel.game) { _ in
+            print("the view has changed")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.50) {
+                toggleScale.toggle()
+                if toggleScale {
+                    self.scale = 1.3
+                } else {
+                    self.scale = 1.2
+                }
+            }
+            
+            print(viewModel.game?.players)
+            
+        }
+        .onDisappear {
+            print("User is leaving")
+        }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action : {
-   
-                self.presentationMode.wrappedValue.dismiss()
+            viewModel.removePlayer()
+            self.presentationMode.wrappedValue.dismiss()
             
             
         }){
             Image(systemName: "arrow.left")
         })
+        
+        
 
     
         

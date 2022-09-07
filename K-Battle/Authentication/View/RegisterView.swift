@@ -57,7 +57,10 @@ struct RegisterView: View {
                     
                     }
                     ButtonView(title: "Sign Up", background: Color.primaryColor) {
+                        
+                        
                         Task {
+                            vm.profilePic = image
                             await vm.register()
                         }
 

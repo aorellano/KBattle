@@ -9,8 +9,9 @@ import Foundation
 
 struct Game: Codable, Identifiable, Hashable {
     let id: String
+    let host: String
     let players: [[String:String]]
-    let isPrivate: Bool
+    var isPrivate: Bool
     let hasStarted: Bool
     let code: String
 }
