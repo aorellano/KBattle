@@ -14,6 +14,7 @@ struct Game: Codable, Identifiable, Hashable {
     var isPrivate: Bool
     var hasStarted: Bool
     let code: String
+    let questions: [String]
 }
 
 enum GameStatus {

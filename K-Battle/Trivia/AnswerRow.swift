@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct AnswerRow: View {
-    @StateObject var viewModel: TriviaViewModel
+    @StateObject var viewModel: WaitingRoomViewModel
     @State private var isSelected = false
     @State var backgroundColor: Color = .white
     var answer: Answer
     
-    init(_ answer: Answer, _ viewModel: TriviaViewModel) {
+    init(_ answer: Answer, _ viewModel: WaitingRoomViewModel) {
         self.answer = answer
         _viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -50,11 +50,5 @@ struct AnswerRow: View {
     func hapticFeedbackResponse(style: UIImpactFeedbackGenerator.FeedbackStyle) {
         let impactMed = UIImpactFeedbackGenerator(style: style)
         impactMed.impactOccurred()
-    }
-}
-
-struct AnswerRow_Previews: PreviewProvider {
-    static var previews: some View {
-        AnswerRow(Answer(text: "Answer", isCorrect: true), TriviaViewModel())
     }
 }

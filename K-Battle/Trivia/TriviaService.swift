@@ -18,13 +18,14 @@ class TriviaServiceImpl: TriviaService {
         
         return snapshot.documents.compactMap { document in
             let data = document.data()
+            let id = data["id"] as? String ?? ""
             let correctAnswer = data["correctAnswer"] as? String ?? ""
             print(correctAnswer)
             let incorrectAnswers = data["incorrectAnswers"] as? [String] ?? [""]
             print(incorrectAnswers)
             let song = data["song"] as? String ?? ""
             print(song)
-            return Question(correctAnswer: correctAnswer, incorrectAnswers: incorrectAnswers, song: song)
+            return Question(id: id, correctAnswer: correctAnswer, incorrectAnswers: incorrectAnswers, song: song)
         }.pick(4)
     }
 }

@@ -9,27 +9,30 @@ import SwiftUI
 
 struct TriviaView: View {
     @State var timeRemaining = 15
-    @StateObject var viewModel: TriviaViewModel
+    @StateObject var viewModel: WaitingRoomViewModel
     
-    init(viewModel: TriviaViewModel = .init()) {
+    init(viewModel: WaitingRoomViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
         VStack {
             HStack {
-                Text("Users")
+                UsersRow(players: viewModel.game?.players ?? [["":""]])
                 Spacer()
-                Text("Time Remaining")
+                Text("10")
+                    .fontWeight(.bold)
+                    .font(.system(size: 28))
+                    .foregroundColor(Color.primaryColor)
             }
             .padding([.top, .leading, .trailing], 20)
             ProgressBar(progress: CGFloat(timeRemaining*20))
                 .padding(.bottom, 40)
            
-            Text("Guess the Song")
+            Text(viewModel.currentQuestion.id)
                 .fontWeight(.bold)
                 .font(.system(size: 20))
-            
+
             Spacer()
            
             ZStack {
@@ -56,8 +59,6 @@ struct TriviaView: View {
             }
             .padding([.leading, .trailing], 15)
             
-        }.task {
-            await viewModel.fetchSongs()
         }
        
         .navigationBarHidden(true)
@@ -88,8 +89,4 @@ struct Bar: View {
     }
 }
 
-struct TriviaView_Previews: PreviewProvider {
-    static var previews: some View {
-        TriviaView()
-    }
-}
+

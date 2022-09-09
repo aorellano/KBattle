@@ -14,10 +14,17 @@ class WaitingRoomViewModel: ObservableObject {
     var gameType: GameType
     var sessionService: SessionServiceImpl
     var playerCount = 0
+    var songs = [Question]()
+    @Published var songIds = [String]()
+    @Published var currentQuestion: Question = Question(id: "", correctAnswer: "", incorrectAnswers: [""], song: "")
+    @Published var answers: [Answer] = [Answer]()
     @Published var gameNotification = GameNotification.hasntStarted
     @Published var game: Game? {
         didSet {
             updateGameNotificationForGame(game)
+            print("updating")
+            songIds = self.game?.questions ?? [""]
+            print(songIds)
         }
     }
     private var cancellables: Set<AnyCancellable> = []
@@ -26,7 +33,7 @@ class WaitingRoomViewModel: ObservableObject {
         game = nil
         self.gameType = gameType
         self.sessionService = sessionService
-        
+        print("init")
         setupGame(with: gameType)
     }
     
@@ -38,14 +45,17 @@ class WaitingRoomViewModel: ObservableObject {
                 .assign(to: \.game, on: self)
                 .store(in: &cancellables)
             print("Starting New Game")
+            print(self.game)
             guard let players = self.game?.players.count else { return }
             playerCount = players
+            songIds = self.game?.questions ?? [""]
         case .JoinRandomGame:
             GameServiceImpl.shared.joinGame(with: sessionService.userDetails ?? SessionUserDetails(id: "", username: "", profilePic: ""))
             GameServiceImpl.shared.$game
                 .assign(to: \.game, on: self)
                 .store(in: &cancellables)
             print("Joining Random Game")
+            songIds = self.game?.questions ?? [""]
         case .JoinGame(let code):
             GameServiceImpl.shared.joinGame(with: sessionService.userDetails ?? SessionUserDetails(id: "", username: "", profilePic: ""), and: code)
                 GameServiceImpl.shared.$game
@@ -75,5 +85,14 @@ class WaitingRoomViewModel: ObservableObject {
     func startGame() {
         GameServiceImpl.shared.game.hasStarted = true
         GameServiceImpl.shared.updateGame(self.game!)
+    }
+    
+    @MainActor
+    func getSong(with index: Int) {
+        Task.init {
+            self.currentQuestion = try await GameServiceImpl.shared.getSong(with: songIds[index]).first ??  Question(id: "", correctAnswer: "", incorrectAnswers: [""], song: "")
+            self.answers = currentQuestion.answers
+            print(self.currentQuestion)
+        }
     }
 }

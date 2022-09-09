@@ -19,7 +19,6 @@ extension EnvironmentValues {
 }
 
 typealias RootPresentationMode = Bool
-
 extension RootPresentationMode {
     public mutating func dismiss() {
         self.toggle()

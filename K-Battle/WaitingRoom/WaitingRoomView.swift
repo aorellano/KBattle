@@ -66,6 +66,7 @@ struct WaitingRoomView: View {
                         ButtonView(title: "Start", background: Color.primaryColor) {
                             print("Starting game")
                             viewModel.startGame()
+                            
                                 isActive = true
                         
                                 
@@ -80,12 +81,9 @@ struct WaitingRoomView: View {
             ForEach((viewModel.game?.players.indices)!, id: \.self) { index in
                 let player = viewModel.game?.players[index]
                 
-                VStack {
+
                 ProfilePicView(profilePic: player?["profilePic"], size: 100, cornerRadius: 50)
-                Text(player?["username"] ?? "No Name")
-                        .font(.system(size: 10))
-                        .multilineTextAlignment(.center)
-                }
+
                     .animation (Animation.spring(dampingFraction: 0.6)
                                     .repeatForever()
                                     .speed (.random(in: 0.05...0.4))
@@ -103,7 +101,7 @@ struct WaitingRoomView: View {
                 
                 }
                 }
-        NavigationLink(destination: NavigationLazyView(TriviaView()), isActive: $isActive){
+        NavigationLink(destination: NavigationLazyView(TriviaView(viewModel: viewModel)), isActive: $isActive){
             EmptyView()
         }.isDetailLink(false)
         }.introspectTabBarController { (UITabBarController) in
@@ -138,7 +136,7 @@ struct WaitingRoomView: View {
         }
       
         .onDisappear {
-            print("User is leaving")
+            viewModel.getSong(with: 0)
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action : {

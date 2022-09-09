@@ -13,7 +13,7 @@ import Combine
 protocol GameService {
     func createNewGame(with user: SessionUserDetails)
     func joinGame(with user: SessionUserDetails)
-    func joinGame(with user: SessionUserDetails, and code: String) -> Bool
+    func joinGame(with user: SessionUserDetails, and code: String)
 }
 
 class GameServiceImpl: ObservableObject, GameService {
@@ -25,7 +25,8 @@ class GameServiceImpl: ObservableObject, GameService {
         print("Creating game for \(user.id)")
         let userInfo = ["id": user.id, "profilePic": user.profilePic, "username": user.username]
         let gameCode = UUID().uuidString.prefix(6)
-        self.game = Game(id: UUID().uuidString, host: user.id, players: [["id": userInfo["id"]!, "profilePic": userInfo["profilePic"]!, "username": userInfo["username"]!]], isPrivate: true, hasStarted: false, code: String(gameCode))
+        let songIds = Array(songIds.shuffled().prefix(2))
+        self.game = Game(id: UUID().uuidString, host: user.id, players: [["id": userInfo["id"]!, "profilePic": userInfo["profilePic"]!, "username": userInfo["username"]!]], isPrivate: true, hasStarted: false, code: String(gameCode), questions: songIds)
         self.updateGame(self.game)
         self.createOnlineGame()
         self.listenForGameChanges(self.game)
@@ -76,12 +77,12 @@ class GameServiceImpl: ObservableObject, GameService {
         }
     }
     
-    func joinGame(with user: SessionUserDetails, and code: String) -> Bool {
+    func joinGame(with user: SessionUserDetails, and code: String) {
         let userInfo = ["id": user.id, "profilePic": user.profilePic, "username": user.username]
-        var gameAvailable = true
         FirebaseReference(.game).whereField("code", isEqualTo: code).getDocuments { [self] querySnapshot, error in
             if let gameData = querySnapshot?.documents.first {
                 self.game = try? gameData.data(as: Game.self)
+                print("the game \(self.game)")
                 self.updateGame(self.game)
                 self.listenForGameChanges(self.game)
                 addPlayer(userInfo, to: self.game)
@@ -89,7 +90,6 @@ class GameServiceImpl: ObservableObject, GameService {
                 self.game = nil
             }
         }
-        return gameAvailable
     }
     
     func addPlayer(_ info: [String:String], to game: Game) {
@@ -112,6 +112,19 @@ class GameServiceImpl: ObservableObject, GameService {
         let gameRef = FirebaseReference(.game).document(game)
         gameRef.updateData(["players": FieldValue.arrayRemove([["id":id]])])
         
+    }
+    
+    func getSong(with id: String) async throws -> [Question] {
+        let snapshot = try await FirebaseReference(.questions).whereField("id", isEqualTo: id).getDocuments()
+        return snapshot.documents.compactMap { document in
+            let data = document.data()
+                let id = data["id"] as? String ?? ""
+                let correctAnswer = data["correctAnswer"] as? String ?? ""
+                let incorrectAnswers = data["incorrectAnswers"] as? [String] ?? [""]
+                let song = data["song"] as? String ?? ""
+                
+                return Question(id: id, correctAnswer: correctAnswer, incorrectAnswers: incorrectAnswers, song: song)
+        }
     }
 }
 

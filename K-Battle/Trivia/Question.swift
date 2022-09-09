@@ -9,6 +9,7 @@ import Foundation
 import FirebaseFirestoreSwift
 
 struct Question: Codable {
+    var id: String
     var correctAnswer: String
     var incorrectAnswers: [String]
     var song: String

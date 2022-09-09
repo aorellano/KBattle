@@ -18,6 +18,8 @@
 		D0192A3A28BE9C29009EC882 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0192A3928BE9C29009EC882 /* LoginView.swift */; };
 		D0192A3D28BE9CB8009EC882 /* InputTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0192A3C28BE9CB8009EC882 /* InputTextFieldView.swift */; };
 		D0192A3F28BE9E00009EC882 /* InputPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0192A3E28BE9E00009EC882 /* InputPasswordView.swift */; };
+		D036BC9628CABD8100B77C61 /* SongIds.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036BC9528CABD8100B77C61 /* SongIds.swift */; };
+		D036BC9828CAC09900B77C61 /* UsersRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036BC9728CAC09900B77C61 /* UsersRow.swift */; };
 		D067A65228C2AA5500DBA4C7 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = D067A65128C2AA5500DBA4C7 /* Introspect */; };
 		D092D93B28C84A9100ED431E /* TriviaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092D93A28C84A9100ED431E /* TriviaViewModel.swift */; };
 		D092D93D28C84AFF00ED431E /* TriviaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092D93C28C84AFF00ED431E /* TriviaView.swift */; };
@@ -101,6 +103,8 @@
 		D0192A3928BE9C29009EC882 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		D0192A3C28BE9CB8009EC882 /* InputTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextFieldView.swift; sourceTree = "<group>"; };
 		D0192A3E28BE9E00009EC882 /* InputPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPasswordView.swift; sourceTree = "<group>"; };
+		D036BC9528CABD8100B77C61 /* SongIds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongIds.swift; sourceTree = "<group>"; };
+		D036BC9728CAC09900B77C61 /* UsersRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersRow.swift; sourceTree = "<group>"; };
 		D092D93A28C84A9100ED431E /* TriviaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaViewModel.swift; sourceTree = "<group>"; };
 		D092D93C28C84AFF00ED431E /* TriviaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaView.swift; sourceTree = "<group>"; };
 		D092D93E28C84C0D00ED431E /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
@@ -268,6 +272,7 @@
 				D0E3326A28C01BA5006D0D77 /* WelcomeHeader.swift */,
 				D0E3326C28C01E81006D0D77 /* HomeLogo.swift */,
 				D092D93E28C84C0D00ED431E /* ProgressBar.swift */,
+				D036BC9728CAC09900B77C61 /* UsersRow.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -346,6 +351,7 @@
 				D0E3326028BF0CE8006D0D77 /* CreateValidator.swift */,
 				D0E3327728C02A42006D0D77 /* NavigationLazyView.swift */,
 				D0E3327928C02A7C006D0D77 /* RootPresentationMode.swift */,
+				D036BC9528CABD8100B77C61 /* SongIds.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -544,6 +550,7 @@
 				D0E3325028BECDCE006D0D77 /* RegistrationService.swift in Sources */,
 				D0192A0F28BDE2ED009EC882 /* ContentView.swift in Sources */,
 				D0E3326D28C01E81006D0D77 /* HomeLogo.swift in Sources */,
+				D036BC9828CAC09900B77C61 /* UsersRow.swift in Sources */,
 				D0E3325928BEE4AE006D0D77 /* ImagePicker.swift in Sources */,
 				D0E3327028C0242B006D0D77 /* WaitingRoomView.swift in Sources */,
 				D0E3325728BED892006D0D77 /* RegistrationViewModel.swift in Sources */,
@@ -552,6 +559,7 @@
 				D092D94128C85A0700ED431E /* AnswerRow.swift in Sources */,
 				D0192A3F28BE9E00009EC882 /* InputPasswordView.swift in Sources */,
 				D0E3327828C02A42006D0D77 /* NavigationLazyView.swift in Sources */,
+				D036BC9628CABD8100B77C61 /* SongIds.swift in Sources */,
 				D0E3327628C0264A006D0D77 /* Game.swift in Sources */,
 				D092D93F28C84C0D00ED431E /* ProgressBar.swift in Sources */,
 				D0E3326128BF0CE8006D0D77 /* CreateValidator.swift in Sources */,
