@@ -19,6 +19,7 @@ struct WaitingRoomView: View {
     @State var privateButtonColor: Color = Color.primaryColor
     @State var toggleScale: Bool = false
     @State var isActive: Bool = false
+    @State var showCountdown: Bool = false
     @EnvironmentObject var sessionService: SessionServiceImpl
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     
@@ -34,8 +35,9 @@ struct WaitingRoomView: View {
                 Text("Waiting for Players...")
                     .font(.system(size: 20))
                     .foregroundColor(.gray)
+            } else if showCountdown == true {
+                CountdownScreen()
             } else {
-   
                 Spacer()
                 VStack {
                     Spacer()
@@ -62,18 +64,11 @@ struct WaitingRoomView: View {
                         .foregroundColor(Color.primaryColor)
                         Spacer()
                         if sessionService.userDetails?.id == viewModel.game?.host ?? "" {
-                            
-                        ButtonView(title: "Start", background: Color.primaryColor) {
-                            print("Starting game")
-                            viewModel.startGame()
-                            
-                                isActive = true
-                        
-                                
-                        
+                            ButtonView(title: "Start", background: Color.primaryColor) {
+                                viewModel.startGame()
+                                //isActive = true
                             }
-                        .frame(width: 100, height: 50)
-                            
+                            .frame(width: 100, height: 50)
                         }
                     }
                     .padding()
@@ -109,12 +104,11 @@ struct WaitingRoomView: View {
             tabBarController = UITabBarController
         }
         .alert("Oops no game available", isPresented: $showAlert) {
-                    Button("OK", role: .cancel) {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                            self.presentationMode.wrappedValue.dismiss()
-                        }
-                        
-                    }
+            Button("OK", role: .cancel) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                        self.presentationMode.wrappedValue.dismiss()
+                }
+            }
         }
         .onChange(of: viewModel.game) { _ in
             print("the view has changed")
@@ -126,50 +120,41 @@ struct WaitingRoomView: View {
                     self.scale = 1.2
                 }
             }
-            
             if viewModel.gameNotification == GameNotification.gameStarted {
-                isActive = true
-                print("the game has started")
+                viewModel.getSong(with: 0)
+                showCountdown = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
+                    isActive = true
+                    AudioManager.shared.player?.playImmediately(atRate: 1.0)
+                }
             }
-            
             print(viewModel.game?.players)
         }
-      
         .onDisappear {
-            viewModel.getSong(with: 0)
+            //viewModel.getSong(with: 0)
+            print("song: \(viewModel.song)")
+            print("onDisappear")
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action : {
             viewModel.removePlayer()
             self.presentationMode.wrappedValue.dismiss()
-            
-            
+
         }){
             Image(systemName: "arrow.left")
         })
-        
-  
-        
-
-    
-        
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(uiColor: UIColor.secondarySystemBackground))
         .onAppear {
-       
-            print(showAlert)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.50) {
                 if viewModel.game == nil {
                     showAlert = true
                 } else {
                     self.scale = 1.2
                 }
-                
             }
         }
-        
     }
-        
 }
 
 //struct WaitingRoomView_Previews: PreviewProvider {

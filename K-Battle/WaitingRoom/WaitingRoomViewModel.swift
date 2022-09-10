@@ -15,6 +15,7 @@ class WaitingRoomViewModel: ObservableObject {
     var sessionService: SessionServiceImpl
     var playerCount = 0
     var songs = [Question]()
+    @Published var song = ""
     @Published var songIds = [String]()
     @Published var currentQuestion: Question = Question(id: "", correctAnswer: "", incorrectAnswers: [""], song: "")
     @Published var answers: [Answer] = [Answer]()
@@ -87,12 +88,19 @@ class WaitingRoomViewModel: ObservableObject {
         GameServiceImpl.shared.updateGame(self.game!)
     }
     
+    func restartGame() {
+        GameServiceImpl.shared.game.hasStarted = false
+        GameServiceImpl.shared.updateGame(self.game!)
+    }
+    
     @MainActor
     func getSong(with index: Int) {
         Task.init {
             self.currentQuestion = try await GameServiceImpl.shared.getSong(with: songIds[index]).first ??  Question(id: "", correctAnswer: "", incorrectAnswers: [""], song: "")
             self.answers = currentQuestion.answers
-            print(self.currentQuestion)
+            self.song = currentQuestion.song
+            AudioManager.shared.startPlayer(with: self.song)
+            print("Audio should start")
         }
     }
 }

@@ -20,6 +20,8 @@
 		D0192A3F28BE9E00009EC882 /* InputPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0192A3E28BE9E00009EC882 /* InputPasswordView.swift */; };
 		D036BC9628CABD8100B77C61 /* SongIds.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036BC9528CABD8100B77C61 /* SongIds.swift */; };
 		D036BC9828CAC09900B77C61 /* UsersRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036BC9728CAC09900B77C61 /* UsersRow.swift */; };
+		D036BC9B28CBD2D800B77C61 /* CountdownScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036BC9A28CBD2D800B77C61 /* CountdownScreen.swift */; };
+		D036BC9D28CBD63000B77C61 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036BC9C28CBD63000B77C61 /* AudioManager.swift */; };
 		D067A65228C2AA5500DBA4C7 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = D067A65128C2AA5500DBA4C7 /* Introspect */; };
 		D092D93B28C84A9100ED431E /* TriviaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092D93A28C84A9100ED431E /* TriviaViewModel.swift */; };
 		D092D93D28C84AFF00ED431E /* TriviaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092D93C28C84AFF00ED431E /* TriviaView.swift */; };
@@ -105,6 +107,9 @@
 		D0192A3E28BE9E00009EC882 /* InputPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPasswordView.swift; sourceTree = "<group>"; };
 		D036BC9528CABD8100B77C61 /* SongIds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongIds.swift; sourceTree = "<group>"; };
 		D036BC9728CAC09900B77C61 /* UsersRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersRow.swift; sourceTree = "<group>"; };
+		D036BC9928CBCB4100B77C61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D036BC9A28CBD2D800B77C61 /* CountdownScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownScreen.swift; sourceTree = "<group>"; };
+		D036BC9C28CBD63000B77C61 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		D092D93A28C84A9100ED431E /* TriviaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaViewModel.swift; sourceTree = "<group>"; };
 		D092D93C28C84AFF00ED431E /* TriviaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaView.swift; sourceTree = "<group>"; };
 		D092D93E28C84C0D00ED431E /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
@@ -204,6 +209,7 @@
 		D0192A0B28BDE2ED009EC882 /* K-Battle */ = {
 			isa = PBXGroup;
 			children = (
+				D036BC9928CBCB4100B77C61 /* Info.plist */,
 				D092D93728C84A7300ED431E /* Trivia */,
 				D0C4DDD928C3F11200161617 /* Settings */,
 				D0E3327428C0260F006D0D77 /* Games */,
@@ -286,6 +292,8 @@
 				D092D94228C860C100ED431E /* Question.swift */,
 				D092D94428C8612100ED431E /* Answer.swift */,
 				D092D94628C862E600ED431E /* TriviaService.swift */,
+				D036BC9A28CBD2D800B77C61 /* CountdownScreen.swift */,
+				D036BC9C28CBD63000B77C61 /* AudioManager.swift */,
 			);
 			path = Trivia;
 			sourceTree = "<group>";
@@ -546,10 +554,12 @@
 				D0E3324B28BEBA64006D0D77 /* RegisterView.swift in Sources */,
 				D092D94328C860C100ED431E /* Question.swift in Sources */,
 				D0E3327C28C0390D006D0D77 /* WaitingRoomViewModel.swift in Sources */,
+				D036BC9B28CBD2D800B77C61 /* CountdownScreen.swift in Sources */,
 				D092D94728C862E600ED431E /* TriviaService.swift in Sources */,
 				D0E3325028BECDCE006D0D77 /* RegistrationService.swift in Sources */,
 				D0192A0F28BDE2ED009EC882 /* ContentView.swift in Sources */,
 				D0E3326D28C01E81006D0D77 /* HomeLogo.swift in Sources */,
+				D036BC9D28CBD63000B77C61 /* AudioManager.swift in Sources */,
 				D036BC9828CAC09900B77C61 /* UsersRow.swift in Sources */,
 				D0E3325928BEE4AE006D0D77 /* ImagePicker.swift in Sources */,
 				D0E3327028C0242B006D0D77 /* WaitingRoomView.swift in Sources */,
@@ -746,6 +756,7 @@
 				DEVELOPMENT_TEAM = S7297N2DPU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "K-Battle/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -775,6 +786,7 @@
 				DEVELOPMENT_TEAM = S7297N2DPU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "K-Battle/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

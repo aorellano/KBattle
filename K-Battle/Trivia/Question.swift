@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct Question: Codable {
+struct Question: Codable, Equatable {
     var id: String
     var correctAnswer: String
     var incorrectAnswers: [String]

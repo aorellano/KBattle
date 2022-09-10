@@ -122,7 +122,7 @@ class GameServiceImpl: ObservableObject, GameService {
                 let correctAnswer = data["correctAnswer"] as? String ?? ""
                 let incorrectAnswers = data["incorrectAnswers"] as? [String] ?? [""]
                 let song = data["song"] as? String ?? ""
-                
+                print("This is the question \(id) \(correctAnswer)")
                 return Question(id: id, correctAnswer: correctAnswer, incorrectAnswers: incorrectAnswers, song: song)
         }
     }

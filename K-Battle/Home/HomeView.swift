@@ -18,9 +18,7 @@ struct HomeView: View {
     @State var code = ""
   
     var body: some View {
-
         NavigationView {
-            
             VStack {
                 HStack {
                     Spacer()
@@ -52,26 +50,21 @@ struct HomeView: View {
                     isActive = true
                 }
                
-          
                 ButtonView(title: "Create Game", background: Color.primaryColor) {
                     gameType = .NewGame
                     isActive = true
                 }
                 
                 if gameType != nil {
-                    NavigationLink(destination: NavigationLazyView(WaitingRoomView(viewModel:
-                                                                                    WaitingRoomViewModel(with: gameType ?? .NewGame, sessionService: sessionService)).environmentObject(sessionService)), isActive: $isActive){
+                    NavigationLink(destination: NavigationLazyView(WaitingRoomView(viewModel: WaitingRoomViewModel(with: gameType ?? .NewGame, sessionService: sessionService))
+                        .environmentObject(sessionService)), isActive: $isActive){
                     EmptyView()
                 }.isDetailLink(false)
-                    
-              
                 }
-                    
             }.introspectTabBarController { (UITabBarController) in
                 UITabBarController.tabBar.isHidden = false
                 tabBarController = UITabBarController
             }
-            
             .onAppear {
                 print("id: \(UUID().uuidString.prefix(6))")
                 tabBarController?.tabBar.isHidden = false
@@ -82,13 +75,7 @@ struct HomeView: View {
             .padding()
             .background(Color(uiColor: UIColor.secondarySystemBackground))
             .navigationBarHidden(true)
-            
         }
-        
-        
-        
-        
-        
         .environment(\.rootPresentationMode, self.$isActive)
         .navigationViewStyle(StackNavigationViewStyle())
         

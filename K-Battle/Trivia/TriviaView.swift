@@ -6,11 +6,16 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct TriviaView: View {
     @State var timeRemaining = 15
     @StateObject var viewModel: WaitingRoomViewModel
+    @State var outerMaxHeight = 0
+    @State var outerMinHeight = 0
+    @State var animate = false
     
+    @State var player = AVPlayer()
     init(viewModel: WaitingRoomViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -37,16 +42,16 @@ struct TriviaView: View {
            
             ZStack {
                 
-            ForEach(0..<360) { i in
-                Bar(maxHeight: 25, minHeight: 1, width: 1)
-                    .offset(y: 150)
-                    .rotationEffect(.degrees(1 * Double(i)))
-            }
+//            ForEach(0..<360) { i in
+//                Bar(maxHeight: 25, minHeight: 1, width: 1, animate: animate)
+//                    .offset(y: 150)
+//                    .rotationEffect(.degrees(1 * Double(i)))
+//            }
        
             
             HStack(spacing: 4) {
                 ForEach(0..<4) { _ in
-                    Bar(maxHeight: 75, minHeight: 10, width: 15)
+                    Bar(maxHeight: 75, minHeight: 10, width: 15, animate: animate)
                 }
             }
             
@@ -58,11 +63,44 @@ struct TriviaView: View {
                 AnswerRow(answer, viewModel)
             }
             .padding([.leading, .trailing], 15)
+        }.onChange(of: viewModel.currentQuestion) { _ in
+           
+//            guard let url = URL(string: viewModel.song) else { return }
+//            print(url)
+//            do {
+//                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+//            }catch {
+//                print("The audio couldnt play")
+//            }
+//            player = AVPlayer(playerItem: AVPlayerItem(url: url))
+            //player.play()
+           // AudioManager.shared.player?.play()
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+                animate = true
+                print("Audio started")
+            }
             
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(7)) {
+                animate = false
+ 
+            }
+            
+            
+        }
+        .onAppear {
+            
+            print("hello")
+            print("url \(viewModel.currentQuestion)")
+            print("onAppear")
+
         }
        
         .navigationBarHidden(true)
         .background(Color(uiColor: UIColor.secondarySystemBackground))
+    }
+    
+    func playerDidFinishPlaying(note: NSNotification) {
+        print("did finish playing")
     }
 }
 
@@ -72,20 +110,36 @@ struct Bar: View {
     let maxHeight: CGFloat
     let minHeight: CGFloat
     let width: CGFloat
+    let animate: Bool
     
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: width/2)
-                .frame(width: width, height: height)
-                .animation(.easeInOut(duration: animationSpeed), value: 1.2)
-                .foregroundColor(.green)
-                .onAppear {
-                    Timer.scheduledTimer(withTimeInterval: animationSpeed, repeats: true) {_ in
-                        height = CGFloat.random(in: minHeight...maxHeight)
+        if animate {
+            ZStack {
+                RoundedRectangle(cornerRadius: width/2)
+                    .frame(width: width, height: height)
+                    .animation(.easeInOut(duration: animationSpeed), value: 1.2)
+                    .foregroundColor(.green)
+                    .onAppear {
+                        Timer.scheduledTimer(withTimeInterval: animationSpeed, repeats: true) {_ in
+                            height = CGFloat.random(in: minHeight...maxHeight)
+                        }
                     }
-                }
+            }
+            .frame(width: width, alignment: .bottom)
+        } else {
+            ZStack {
+                RoundedRectangle(cornerRadius: width/2)
+                    .frame(width: width, height: height)
+                    .animation(.easeInOut(duration: 0), value: 1.2)
+                    .foregroundColor(.green)
+                    .onAppear {
+                        Timer.scheduledTimer(withTimeInterval: animationSpeed, repeats: true) {_ in
+                            height = 10
+                        }
+                    }
+            }
+            .frame(width: width, alignment: .bottom)
         }
-        .frame(width: width, alignment: .bottom)
     }
 }
 
