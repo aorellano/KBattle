@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct AnswerRow: View {
-    @StateObject var viewModel: WaitingRoomViewModel
+    @StateObject var viewModel: TriviaViewModel
     @State private var isSelected = false
     @State var backgroundColor: Color = .white
     var answer: Answer
     
-    init(_ answer: Answer, _ viewModel: WaitingRoomViewModel) {
+    init(_ answer: Answer, _ viewModel: TriviaViewModel) {
         self.answer = answer
         _viewModel = StateObject(wrappedValue: viewModel)
     }

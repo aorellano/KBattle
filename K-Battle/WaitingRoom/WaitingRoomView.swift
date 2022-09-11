@@ -96,7 +96,7 @@ struct WaitingRoomView: View {
                 
                 }
                 }
-        NavigationLink(destination: NavigationLazyView(TriviaView(viewModel: viewModel)), isActive: $isActive){
+            NavigationLink(destination: NavigationLazyView(TriviaView(viewModel: TriviaViewModel(game: viewModel.game!, currentQuestion: viewModel.currentQuestion, answers: viewModel.answers, songIds: viewModel.songIds))), isActive: $isActive){
             EmptyView()
         }.isDetailLink(false)
         }.introspectTabBarController { (UITabBarController) in

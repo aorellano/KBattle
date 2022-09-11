@@ -9,60 +9,65 @@ import SwiftUI
 import AVFoundation
 
 struct TriviaView: View {
-    @State var timeRemaining = 15
-    @StateObject var viewModel: WaitingRoomViewModel
+    @State var timeRemaining = 10
+    @StateObject var viewModel: TriviaViewModel
     @State var outerMaxHeight = 0
     @State var outerMinHeight = 0
     @State var animate = false
-    
     @State var player = AVPlayer()
-    init(viewModel: WaitingRoomViewModel) {
+    @State var showCountdown: Bool = false
+    
+    init(viewModel: TriviaViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
         VStack {
-            HStack {
-                UsersRow(players: viewModel.game?.players ?? [["":""]])
-                Spacer()
-                Text("10")
-                    .fontWeight(.bold)
-                    .font(.system(size: 28))
-                    .foregroundColor(Color.primaryColor)
-            }
-            .padding([.top, .leading, .trailing], 20)
-            ProgressBar(progress: CGFloat(timeRemaining*20))
-                .padding(.bottom, 40)
-           
-            Text(viewModel.currentQuestion.id)
-                .fontWeight(.bold)
-                .font(.system(size: 20))
-
-            Spacer()
-           
-            ZStack {
-                
-//            ForEach(0..<360) { i in
-//                Bar(maxHeight: 25, minHeight: 1, width: 1, animate: animate)
-//                    .offset(y: 150)
-//                    .rotationEffect(.degrees(1 * Double(i)))
-//            }
-       
-            
-            HStack(spacing: 4) {
-                ForEach(0..<4) { _ in
-                    Bar(maxHeight: 75, minHeight: 10, width: 15, animate: animate)
+            if showCountdown {
+                CountdownScreen()
+            } else {
+                HStack {
+                    UsersRow(players: viewModel.game.players ?? [["":""]])
+                    Spacer()
+                    Text("\(timeRemaining)")
+                        .fontWeight(.bold)
+                        .font(.system(size: 28))
+                        .foregroundColor(Color.primaryColor)
                 }
-            }
-            
-            }.padding()
-            
+                .padding([.top, .leading, .trailing], 20)
+                ProgressBar(progress: CGFloat(timeRemaining*20))
+                    .padding(.bottom, 40)
                 
-            Spacer()
-            ForEach(viewModel.answers) { answer in
-                AnswerRow(answer, viewModel)
+                Text(viewModel.currentQuestion.id)
+                    .fontWeight(.bold)
+                    .font(.system(size: 20))
+                
+                Spacer()
+                
+                ZStack {
+                    
+                    //            ForEach(0..<360) { i in
+                    //                Bar(maxHeight: 25, minHeight: 1, width: 1, animate: animate)
+                    //                    .offset(y: 150)
+                    //                    .rotationEffect(.degrees(1 * Double(i)))
+                    //            }
+                    
+                    
+                    HStack(spacing: 4) {
+                        ForEach(0..<4) { _ in
+                            Bar(maxHeight: 75, minHeight: 10, width: 15, animate: animate)
+                        }
+                    }
+                    
+                }.padding()
+                
+                
+                Spacer()
+                ForEach(viewModel.answers) { answer in
+                    AnswerRow(answer, viewModel)
+                }
+                .padding([.leading, .trailing], 15)
             }
-            .padding([.leading, .trailing], 15)
         }.onChange(of: viewModel.currentQuestion) { _ in
            
 //            guard let url = URL(string: viewModel.song) else { return }
@@ -84,12 +89,31 @@ struct TriviaView: View {
                 animate = false
  
             }
+            print("new question has been set")
             
             
+        }
+        .onReceive(viewModel.timer) { time in
+            if timeRemaining > 0 {
+                timeRemaining -= 1
+            } else if timeRemaining == 0 {
+                viewModel.timer.upstream.connect().cancel()
+                viewModel.setNextQuestion(with: 1)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    showCountdown = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
+                        timeRemaining = 15
+                        showCountdown = false
+                        AudioManager.shared.player?.playImmediately(atRate: 1.0)
+                        viewModel.timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+                    }
+                }
+            }
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 AudioManager.shared.player?.playImmediately(atRate: 1.0)
+                
             }
             
             print("hello")

@@ -10,27 +10,35 @@ import FirebaseFirestore
 
 class TriviaViewModel: ObservableObject {
     @Published var songs = [Question]()
-    @Published var answers: [Answer] = []
+    @Published var answers: [Answer] = [Answer]()
     @Published var question: Question?
     @Published var answerSelected = false
+    @Published var songIds = [String]()
+    @Published var currentQuestion: Question = Question(id: "", correctAnswer: "", incorrectAnswers: [""], song: "")
+    @Published var song = ""
     var service: TriviaService
+    @Published var game: Game
+    var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
-    init(service: TriviaService = TriviaServiceImpl()) {
+    init(game: Game, currentQuestion: Question, answers: [Answer], songIds: [String], service: TriviaService = TriviaServiceImpl()) {
+        self.game = game
         self.service = service
+        self.currentQuestion = currentQuestion
+        self.answers = answers
+        self.songIds = songIds
+        print(self.game)
     }
+    
+
     
     @MainActor
-    func fetchSongs() async {
+    func setNextQuestion(with index: Int) {
         Task.init {
-            self.songs = try await service.getQuestions()
-            setQuestion()
+            self.currentQuestion = try await GameServiceImpl.shared.getSong(with: songIds[index]).first ??  Question(id: "", correctAnswer: "", incorrectAnswers: [""], song: "")
+            self.answers = currentQuestion.answers
+            self.song = currentQuestion.song
+            AudioManager.shared.startPlayer(with: self.song)
+            print("Audio should start")
         }
-        
-    }
-    
-    func setQuestion() {
-        let currentQuestion = songs.randomElement()
-        question = currentQuestion
-        answers = question?.answers ?? [Answer(text: "", isCorrect: false)]
     }
 }
