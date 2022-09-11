@@ -21,7 +21,7 @@ class AudioManager {
         }catch {
             print("The audio couldnt play")
         }
-        
+    
         player = AVPlayer(playerItem: AVPlayerItem(url: url))
 
         //player?.playImmediately(atRate: 1.0)

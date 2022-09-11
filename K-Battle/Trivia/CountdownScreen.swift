@@ -8,15 +8,35 @@
 import SwiftUI
 
 struct CountdownScreen: View {
-    @State var timeRemaining = 10
+    @State var timeRemaining = 3
         let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State var scale = 1.0
     var body: some View {
-        Text("\(timeRemaining)")
-            .onReceive(timer) { _ in
-                if timeRemaining > 0 {
-                    timeRemaining -= 1
+        
+        VStack {
+            Spacer()
+            Text("\(timeRemaining)")
+                .font(.system(size: 150))
+                .fontWeight(.bold)
+                .foregroundColor(Color.primaryColor)
+                .onReceive(timer) { _ in
+                    
+                    if timeRemaining > 0 {
+                        self.scale = 2
+                        timeRemaining -= 1
+                        
+                    }
                 }
-            }
+                .scaleEffect(self.scale)
+                .animation(Animation.easeInOut(duration: 0.55).repeatForever(autoreverses: true), value: self.scale)
+            Spacer()
+        }
+        .onAppear {
+            self.scale = 2
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+        .background(Color(uiColor: UIColor.secondarySystemBackground))
     }
 }
 

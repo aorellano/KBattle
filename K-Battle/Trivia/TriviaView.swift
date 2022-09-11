@@ -88,6 +88,9 @@ struct TriviaView: View {
             
         }
         .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                AudioManager.shared.player?.playImmediately(atRate: 1.0)
+            }
             
             print("hello")
             print("url \(viewModel.currentQuestion)")

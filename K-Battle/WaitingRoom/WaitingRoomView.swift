@@ -125,7 +125,7 @@ struct WaitingRoomView: View {
                 showCountdown = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
                     isActive = true
-                    AudioManager.shared.player?.playImmediately(atRate: 1.0)
+                    //AudioManager.shared.player?.playImmediately(atRate: 1.0)
                 }
             }
             print(viewModel.game?.players)
@@ -138,6 +138,9 @@ struct WaitingRoomView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action : {
             viewModel.removePlayer()
+            if sessionService.userDetails?.id == viewModel.game?.host {
+                viewModel.changeHost()
+            }
             self.presentationMode.wrappedValue.dismiss()
 
         }){

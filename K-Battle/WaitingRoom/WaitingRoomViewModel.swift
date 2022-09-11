@@ -59,10 +59,9 @@ class WaitingRoomViewModel: ObservableObject {
             songIds = self.game?.questions ?? [""]
         case .JoinGame(let code):
             GameServiceImpl.shared.joinGame(with: sessionService.userDetails ?? SessionUserDetails(id: "", username: "", profilePic: ""), and: code)
-                GameServiceImpl.shared.$game
-                    .assign(to: \.game, on: self)
-                    .store(in: &cancellables)
-            
+            GameServiceImpl.shared.$game
+                .assign(to: \.game, on: self)
+                .store(in: &cancellables)
             print("Joining game with \(code)")
         }
     }
@@ -88,9 +87,13 @@ class WaitingRoomViewModel: ObservableObject {
         GameServiceImpl.shared.updateGame(self.game!)
     }
     
-    func restartGame() {
-        GameServiceImpl.shared.game.hasStarted = false
-        GameServiceImpl.shared.updateGame(self.game!)
+    func changeHost() {
+        if let newHost = game?.players.randomElement() {
+            GameServiceImpl.shared.game.host = newHost["id"]!
+            GameServiceImpl.shared.updateGame(self.game!)
+        } else {
+            //delete the game
+        }
     }
     
     @MainActor
