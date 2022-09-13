@@ -18,7 +18,7 @@ class TriviaViewModel: ObservableObject {
     @Published var song = ""
     var service: TriviaService
     @Published var game: Game
-    var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    var timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     
     init(game: Game, currentQuestion: Question, answers: [Answer], songIds: [String], service: TriviaService = TriviaServiceImpl()) {
         self.game = game

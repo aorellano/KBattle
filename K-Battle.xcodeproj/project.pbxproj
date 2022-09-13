@@ -33,6 +33,7 @@
 		D0C4DDDB28C3F14C00161617 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C4DDDA28C3F14C00161617 /* SettingsView.swift */; };
 		D0C4DDDE28C3FE9A00161617 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = D0C4DDDD28C3FE9A00161617 /* Introspect */; };
 		D0C4DDE028C7C37F00161617 /* GameNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C4DDDF28C7C37F00161617 /* GameNotification.swift */; };
+		D0CA2F2928CD991D0047ECCF /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CA2F2828CD991C0047ECCF /* ResultsView.swift */; };
 		D0E3322528BE9FE1006D0D77 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3322428BE9FE1006D0D77 /* ButtonView.swift */; };
 		D0E3322A28BEA5BA006D0D77 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3322928BEA5BA006D0D77 /* LoginViewModel.swift */; };
 		D0E3322D28BEA5E7006D0D77 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3322C28BEA5E7006D0D77 /* LoginService.swift */; };
@@ -119,6 +120,7 @@
 		D092D94628C862E600ED431E /* TriviaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaService.swift; sourceTree = "<group>"; };
 		D0C4DDDA28C3F14C00161617 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D0C4DDDF28C7C37F00161617 /* GameNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNotification.swift; sourceTree = "<group>"; };
+		D0CA2F2828CD991C0047ECCF /* ResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
 		D0E3322428BE9FE1006D0D77 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		D0E3322928BEA5BA006D0D77 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D0E3322C28BEA5E7006D0D77 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 		D0192A0B28BDE2ED009EC882 /* K-Battle */ = {
 			isa = PBXGroup;
 			children = (
+				D0CA2F2728CD990B0047ECCF /* Results */,
 				D036BC9928CBCB4100B77C61 /* Info.plist */,
 				D092D93728C84A7300ED431E /* Trivia */,
 				D0C4DDD928C3F11200161617 /* Settings */,
@@ -304,6 +307,14 @@
 				D0C4DDDA28C3F14C00161617 /* SettingsView.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		D0CA2F2728CD990B0047ECCF /* Results */ = {
+			isa = PBXGroup;
+			children = (
+				D0CA2F2828CD991C0047ECCF /* ResultsView.swift */,
+			);
+			path = Results;
 			sourceTree = "<group>";
 		};
 		D0E3322628BEA599006D0D77 /* View */ = {
@@ -556,6 +567,7 @@
 				D0E3327C28C0390D006D0D77 /* WaitingRoomViewModel.swift in Sources */,
 				D036BC9B28CBD2D800B77C61 /* CountdownScreen.swift in Sources */,
 				D092D94728C862E600ED431E /* TriviaService.swift in Sources */,
+				D0CA2F2928CD991D0047ECCF /* ResultsView.swift in Sources */,
 				D0E3325028BECDCE006D0D77 /* RegistrationService.swift in Sources */,
 				D0192A0F28BDE2ED009EC882 /* ContentView.swift in Sources */,
 				D0E3326D28C01E81006D0D77 /* HomeLogo.swift in Sources */,
