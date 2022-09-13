@@ -26,7 +26,7 @@ class GameServiceImpl: ObservableObject, GameService {
         let userInfo = ["id": user.id, "profilePic": user.profilePic, "username": user.username]
         let gameCode = UUID().uuidString.prefix(6)
         let songIds = Array(songIds.shuffled().prefix(2))
-        self.game = Game(id: UUID().uuidString, host: user.id, players: [["id": userInfo["id"]!, "profilePic": userInfo["profilePic"]!, "username": userInfo["username"]!]], isPrivate: true, hasStarted: false, code: String(gameCode), questions: songIds)
+        self.game = Game(id: UUID().uuidString, host: user.id, players: [["id": userInfo["id"]!, "profilePic": userInfo["profilePic"]!, "username": userInfo["username"]!, "score": "0"]], isPrivate: true, hasStarted: false, code: String(gameCode), questions: songIds)
         self.updateGame(self.game)
         self.createOnlineGame()
         self.listenForGameChanges(self.game)
@@ -103,7 +103,7 @@ class GameServiceImpl: ObservableObject, GameService {
     
     func addPlayer(_ info: [String:String], to game: Game){
         let gameRef = FirebaseReference(.game).document(game.id)
-        gameRef.updateData(["players": FieldValue.arrayUnion([["id":info["id"], "profilePic":info["profilePic"], "username":info["username"]]])])
+        gameRef.updateData(["players": FieldValue.arrayUnion([["id":info["id"], "profilePic":info["profilePic"], "username":info["username"], "score":"0"]])])
     }
     
 

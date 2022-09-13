@@ -16,6 +16,8 @@ class TriviaViewModel: ObservableObject {
     @Published var songIds = [String]()
     @Published var currentQuestion: Question = Question(id: "", correctAnswer: "", incorrectAnswers: [""], song: "")
     @Published var song = ""
+    @Published var score = 0
+    @Published var streakCtr = 0
     var service: TriviaService
     @Published var game: Game
     var timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
@@ -29,8 +31,6 @@ class TriviaViewModel: ObservableObject {
         print(self.game)
     }
     
-
-    
     @MainActor
     func setNextQuestion(with index: Int) {
         Task.init {
@@ -40,5 +40,28 @@ class TriviaViewModel: ObservableObject {
             AudioManager.shared.startPlayer(with: self.song)
             print("Audio should start")
         }
+    }
+    
+    func selectAnswer(answer: Answer, with time: CGFloat) {
+        answerSelected = true
+        
+        if answer.isCorrect {
+            let roundedValue = round(time * 10) / 10.0
+            let points = 10 - (round((10-roundedValue) * 10)/10.0)
+            let totalPoints = Int(round(roundedValue * 10)) + (streakCtr * 10)
+            score += totalPoints
+            streakCtr += 1
+        } else {
+            score += 0
+            streakCtr = 0
+        }
+        
+        //updatePlayersScore(answer: answer)
+        print("Player Score: \(self.score)")
+    }
+    
+    func updatePlayersScore(answer: Answer) {
+        
+        //
     }
 }

@@ -42,7 +42,7 @@ struct TriviaView: View {
                             .foregroundColor(Color.primaryColor)
                     }
                     .padding([.top, .leading, .trailing], 20)
-                    ProgressBar(progress: CGFloat((timeRemaining)*20))
+                    ProgressBar(progress: CGFloat((timeRemaining)*25))
                         .padding(.bottom, 40)
                     
                     Text(viewModel.currentQuestion.id)
@@ -71,7 +71,7 @@ struct TriviaView: View {
                     
                     Spacer()
                     ForEach(viewModel.answers) { answer in
-                        AnswerRow(answer, viewModel)
+                        AnswerRow(answer, viewModel, timeRemaining: timeRemaining)
                     }
                     .padding([.leading, .trailing], 15)
                 }
@@ -103,11 +103,11 @@ struct TriviaView: View {
         }
      
         .onReceive(viewModel.timer) { time in
+            let roundedValue = round(timeRemaining * 10) / 10.0
             if timeRemaining > 0.1 {
                 timeRemaining -= 0.1
-                let roundedValue = round(timeRemaining * 10) / 10.0
                 print(roundedValue)
-            } else if timeRemaining == 0.0 {
+            } else if roundedValue == 0.0 {
                 if questionCtr == 5 {
                     viewModel.timer.upstream.connect().cancel()
                     isActive = true
@@ -118,11 +118,12 @@ struct TriviaView: View {
                     questionCtr += 1
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         showCountdown = true
+                        viewModel.answerSelected = false
                         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
-                            timeRemaining = 10
+                            timeRemaining = 10.0
                             showCountdown = false
                             AudioManager.shared.player?.playImmediately(atRate: 1.0)
-                            viewModel.timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+                            viewModel.timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
                         }
                     }
                 }

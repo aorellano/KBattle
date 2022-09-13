@@ -11,11 +11,14 @@ struct AnswerRow: View {
     @StateObject var viewModel: TriviaViewModel
     @State private var isSelected = false
     @State var backgroundColor: Color = .white
+    @State var timeRemaining = 10.0
     var answer: Answer
     
-    init(_ answer: Answer, _ viewModel: TriviaViewModel) {
+    init(_ answer: Answer, _ viewModel: TriviaViewModel, timeRemaining: CGFloat) {
         self.answer = answer
+        
         _viewModel = StateObject(wrappedValue: viewModel)
+        self.timeRemaining = timeRemaining
     }
     
     var body: some View {
@@ -33,6 +36,10 @@ struct AnswerRow: View {
             .scaleEffect(isSelected ? 0.96:1)
             .animation(.spring(response: 0.9, dampingFraction: 0.8), value: 0.6)
             .onTapGesture {
+                if !viewModel.answerSelected {
+                    isSelected = true
+                    viewModel.selectAnswer(answer: answer, with: timeRemaining)
+                }
                 isSelected.toggle()
                 if answer.isCorrect {
                     backgroundColor = Color(uiColor: UIColor.systemGreen)
@@ -44,6 +51,10 @@ struct AnswerRow: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
                     isSelected = false
                 }
+            }
+        }.onReceive(viewModel.timer) { time in
+            if timeRemaining > 0.1 {
+                timeRemaining -= 0.1
             }
         }
     }
