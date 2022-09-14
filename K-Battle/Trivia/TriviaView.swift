@@ -34,7 +34,7 @@ struct TriviaView: View {
                     CountdownScreen()
                 } else {
                     HStack {
-                        UsersRow(players: viewModel.game.players ?? [["":""]])
+                        UsersRow(viewModel: viewModel)
                         Spacer()
                         Text("\(String(Int (timeRemaining)))")
                             .fontWeight(.bold)
@@ -114,7 +114,7 @@ struct TriviaView: View {
                     print("end of game")
                 } else {
                     viewModel.timer.upstream.connect().cancel()
-                    viewModel.setNextQuestion(with: 1)
+                    viewModel.setNextQuestion(with: questionCtr)
                     questionCtr += 1
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         showCountdown = true

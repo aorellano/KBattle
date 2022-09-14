@@ -25,7 +25,7 @@ class GameServiceImpl: ObservableObject, GameService {
         print("Creating game for \(user.id)")
         let userInfo = ["id": user.id, "profilePic": user.profilePic, "username": user.username]
         let gameCode = UUID().uuidString.prefix(6)
-        let songIds = Array(songIds.shuffled().prefix(2))
+        let songIds = Array(songIds.shuffled().prefix(5))
         self.game = Game(id: UUID().uuidString, host: user.id, players: [["id": userInfo["id"]!, "profilePic": userInfo["profilePic"]!, "username": userInfo["username"]!, "score": "0"]], isPrivate: true, hasStarted: false, code: String(gameCode), questions: songIds)
         self.updateGame(self.game)
         self.createOnlineGame()
@@ -135,6 +135,28 @@ class GameServiceImpl: ObservableObject, GameService {
                 return Question(id: id, correctAnswer: correctAnswer, incorrectAnswers: incorrectAnswers, song: song)
         }
     }
+    
+    func updatePlayerScore(with score: Int, and player: SessionUserDetails) {
+        let userInfo = ["id": player.id, "profilePic": player.profilePic, "username": player.username, "score": String(score)]
+        let id = player.id
+        FirebaseReference(.game).document(game.id).updateData([
+            "\(id).score" : userInfo["score"]
+        ])
+    }
 }
+    
+//db.collection("EventsData").document("5Ag9...").updateData([
+//    "2F27B92...5989B.voteCount": FieldValue.increment(Int64(1))
+//]
 
+    
+
+//db.collection("users").d(checkId).update({
+//  "myCart.0.qty": firebase.firestore.FieldValue.increment(1)
+//}),
+// db.collection("users").doc(checkId).update({
+//myCart: firebase.firestore.FieldValue.arrayUnion({
+//    qty: firebase.firestore.FieldValue.increment(1),
+//
+//}),
 //when the host leaves the game a new host should be assigned
