@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import Combine
 import AVFoundation
+import FirebaseAuth
 
 class WaitingRoomViewModel: ObservableObject {
     var gameType: GameType
@@ -78,22 +79,23 @@ class WaitingRoomViewModel: ObservableObject {
     }
     
     func removePlayer() {
-        guard let details = sessionService.userDetails else { return }
-        GameServiceImpl.shared.removePlayer(with: details, for: self.game!.id)
-    }
-    
-    func startGame() {
-        GameServiceImpl.shared.game.hasStarted = true
-        GameServiceImpl.shared.updateGame(self.game!)
+        guard let info = sessionService.userDetails else { return }
+        GameServiceImpl.shared.removePlayer(info, to: game!)
+        changeHost()
     }
     
     func changeHost() {
-        if let newHost = game?.players.randomElement() {
+        let newHost = game?.players.first(where: {$0["id"] != Auth.auth().currentUser?.uid})
+        if let newHost = newHost {
             GameServiceImpl.shared.game.host = newHost["id"]!
-            GameServiceImpl.shared.updateGame(self.game!)
         } else {
-            //delete the game
+            GameServiceImpl.shared.deleteGame(with: game!.id)
         }
+    }
+
+    func startGame() {
+        GameServiceImpl.shared.game.hasStarted = true
+        GameServiceImpl.shared.updateGame(self.game!)
     }
     
     @MainActor

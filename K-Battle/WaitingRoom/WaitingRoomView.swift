@@ -140,11 +140,7 @@ struct WaitingRoomView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action : {
             viewModel.removePlayer()
-            if sessionService.userDetails?.id == viewModel.game?.host {
-                viewModel.changeHost()
-            }
             self.presentationMode.wrappedValue.dismiss()
-
         }){
             Image(systemName: "arrow.left")
         })

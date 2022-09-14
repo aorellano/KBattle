@@ -60,7 +60,6 @@ class GameServiceImpl: ObservableObject, GameService {
         }
     }
     
- 
     func joinGame(with user: SessionUserDetails) {
         let userInfo = ["id": user.id, "profilePic": user.profilePic, "username": user.username]
         FirebaseReference(.game).whereField("hasStarted", isEqualTo: false).whereField("isPrivate", isEqualTo: false).getDocuments { [self] querySnapshot, error in
@@ -77,9 +76,7 @@ class GameServiceImpl: ObservableObject, GameService {
             } else {
                 self.game = nil
             }
-            
         }
-        
     }
     
     func joinGame(with user: SessionUserDetails, and code: String) {
@@ -107,21 +104,14 @@ class GameServiceImpl: ObservableObject, GameService {
     }
     
 
-    func removePlayer(with info: SessionUserDetails, for game: String) {
+    func removePlayer(_ info: SessionUserDetails, to game: Game) {
         let userInfo = ["id": info.id, "profilePic": info.profilePic, "username": info.username]
-        
-        let gameRef = FirebaseReference(.game).document(game)
-        gameRef.updateData(["players": FieldValue.arrayRemove([["id":userInfo["id"], "profilePic":userInfo["profilePic"], "username":userInfo["username"]]])])
-        
+        let gameRef = FirebaseReference(.game).document(game.id)
+        gameRef.updateData(["players": FieldValue.arrayRemove([["id":userInfo["id"], "profilePic":userInfo["profilePic"], "username":userInfo["username"], "score":"0"]])])
     }
     
-    func removePlayer(with id: String, for game: String) {
-       // let userInfo = ["id": info.id, "profilePic": info.profilePic, "username": info.username]
 
-        let gameRef = FirebaseReference(.game).document(game)
-        gameRef.updateData(["players": FieldValue.arrayRemove([["id":id]])])
-        
-    }
+    
     
     func getSong(with id: String) async throws -> [Question] {
         let snapshot = try await FirebaseReference(.questions).whereField("id", isEqualTo: id).getDocuments()
@@ -143,20 +133,10 @@ class GameServiceImpl: ObservableObject, GameService {
             "\(id).score" : userInfo["score"]
         ])
     }
+    
+    func deleteGame(with gameId: String) {
+        FirebaseReference(.game).document(gameId).delete()
+    }
 }
-    
-//db.collection("EventsData").document("5Ag9...").updateData([
-//    "2F27B92...5989B.voteCount": FieldValue.increment(Int64(1))
-//]
 
-    
-
-//db.collection("users").d(checkId).update({
-//  "myCart.0.qty": firebase.firestore.FieldValue.increment(1)
-//}),
-// db.collection("users").doc(checkId).update({
-//myCart: firebase.firestore.FieldValue.arrayUnion({
-//    qty: firebase.firestore.FieldValue.increment(1),
-//
-//}),
 //when the host leaves the game a new host should be assigned
