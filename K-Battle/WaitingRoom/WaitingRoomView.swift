@@ -76,25 +76,27 @@ struct WaitingRoomView: View {
             ForEach((viewModel.game?.players.indices)!, id: \.self) { index in
                 let player = viewModel.game?.players[index]
                 
-
-                ProfilePicView(profilePic: player?["profilePic"], size: 100, cornerRadius: 50)
-
-                    .animation (Animation.spring(dampingFraction: 0.6)
-                                    .repeatForever()
-                                    .speed (.random(in: 0.05...0.4))
-
-                                    .delay(.random (in: 0...0.8)), value: self.scale
-                    )
-                    
+         
+                    ProfilePicView(profilePic: player?["profilePic"], size: 100, cornerRadius: 50)
                 
-                    .frame(width: .random(in: 1...100),
-                           height: CGFloat.random (in:20...100),
-                           alignment: .center)
                     
-                    .position(CGPoint(x: .random(in: 40...325),
-                                      y: .random(in: 15...400)))
-                
+                    .animation (Animation.interpolatingSpring(stiffness: 40, damping: 10, initialVelocity: 5)
+                            .repeatForever()
+                            .speed(.random(in: 0.08...0.3))
+                                    
+                            .delay(.random (in: 0...0.4)), value: self.scale
+                        )
+                    
+                    
+                        .frame(width: .random(in: 1...100),
+                               height: CGFloat.random (in:20...100),
+                               alignment: .center)
+                    
+                        .position(CGPoint(x: .random(in: 40...325),
+                                          y: .random(in: 15...400)))
+                        
                 }
+                
                 }
             NavigationLink(destination: NavigationLazyView(TriviaView(viewModel: TriviaViewModel(game: viewModel.game!, currentQuestion: viewModel.currentQuestion, answers: viewModel.answers, songIds: viewModel.songIds, sessionService: sessionService))), isActive: $isActive){
             EmptyView()
@@ -153,7 +155,7 @@ struct WaitingRoomView: View {
                 if viewModel.game == nil {
                     showAlert = true
                 } else {
-                    self.scale = 1.2
+                    self.scale = 1.12
                 }
             }
         }
