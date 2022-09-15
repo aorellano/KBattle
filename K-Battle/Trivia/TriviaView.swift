@@ -18,6 +18,7 @@ struct TriviaView: View {
     @State var showCountdown: Bool = false
     @State var questionCtr = 1
     @State var isActive: Bool = false
+    @State var scale = 1.0
     
     init(viewModel: TriviaViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -28,7 +29,6 @@ struct TriviaView: View {
             NavigationLink(destination: NavigationLazyView(ResultsView()), isActive: $isActive){
                 EmptyView()
             }.isDetailLink(false)
-        
             VStack {
                 if showCountdown {
                     CountdownScreen()
@@ -42,33 +42,33 @@ struct TriviaView: View {
                             .foregroundColor(Color.primaryColor)
                     }
                     .padding([.top, .leading, .trailing], 20)
-                    ProgressBar(progress: CGFloat((timeRemaining)*25))
+                    ProgressBar(progress: CGFloat((timeRemaining)*32))
                         .padding(.bottom, 40)
                     
-                    Text(viewModel.currentQuestion.id)
+                    Text("Guess the Song")
                         .fontWeight(.bold)
-                        .font(.system(size: 20))
+                        .font(.system(size: 24))
                     
                     Spacer()
                     
                     ZStack {
-                        
-                        //            ForEach(0..<360) { i in
-                        //                Bar(maxHeight: 25, minHeight: 1, width: 1, animate: animate)
-                        //                    .offset(y: 150)
-                        //                    .rotationEffect(.degrees(1 * Double(i)))
-                        //            }
-                        
-                        
-                        HStack(spacing: 4) {
-                            ForEach(0..<4) { _ in
-                                Bar(maxHeight: 75, minHeight: 10, width: 15, animate: animate)
-                            }
-                        }
+                        Image("PandaBody")
+                            .resizable()
+                            .frame(width: 250, height: 175)
+                            .padding(.top, 58)
+                            .padding(.leading, 123)
+                        Image("PandaHead2")
+                            .resizable()
+                            .frame(width: 155, height: 155)
+                            //.scaleEffect(animate ? 0.9 : 0.8)
+                            .scaleEffect(self.scale)
+                            .animation(Animation.easeInOut(duration: 1).speed(.random(in: 3...4)).repeatForever(autoreverses: true), value: self.scale)
+                            .padding(.top, -90)
+                            .padding(.trailing,5)
+                            
+                            
                         
                     }.padding()
-                    
-                    
                     Spacer()
                     ForEach(viewModel.answers) { answer in
                         AnswerRow(answer, viewModel, timeRemaining: timeRemaining)
@@ -77,28 +77,7 @@ struct TriviaView: View {
                 }
             }
         }.onChange(of: viewModel.currentQuestion) { _ in
-           
-//            guard let url = URL(string: viewModel.song) else { return }
-//            print(url)
-//            do {
-//                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-//            }catch {
-//                print("The audio couldnt play")
-//            }
-//            player = AVPlayer(playerItem: AVPlayerItem(url: url))
-            //player.play()
-           // AudioManager.shared.player?.play()
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-                animate = true
-                print("Audio started")
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(7)) {
-                animate = false
- 
-            }
             print("new question has been set")
-            
             
         }
      
@@ -106,90 +85,40 @@ struct TriviaView: View {
             let roundedValue = round(timeRemaining * 10) / 10.0
             if timeRemaining > 0.1 {
                 timeRemaining -= 0.1
-                print(roundedValue)
+                self.scale = 0.94
             } else if roundedValue == 0.0 {
                 if questionCtr == 5 {
                     viewModel.timer.upstream.connect().cancel()
                     isActive = true
-                    print("end of game")
                 } else {
+                    self.scale = 1.0
                     viewModel.timer.upstream.connect().cancel()
                     viewModel.setNextQuestion(with: questionCtr)
                     questionCtr += 1
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                   // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         showCountdown = true
                         viewModel.answerSelected = false
                         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
                             timeRemaining = 10.0
                             showCountdown = false
                             AudioManager.shared.player?.playImmediately(atRate: 1.0)
+                           
                             viewModel.timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
                         }
-                    }
+                    
                 }
-                
             }
         }
-        
-       
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 AudioManager.shared.player?.playImmediately(atRate: 1.0)
-                
+                animate = true
             }
-            
-            print("hello")
-            print("url \(viewModel.currentQuestion)")
-            print("onAppear")
-
         }
-        
         .navigationBarHidden(true)
         .background(Color(uiColor: UIColor.secondarySystemBackground))
     }
-    
-    func playerDidFinishPlaying(note: NSNotification) {
-        print("did finish playing")
-    }
 }
 
-struct Bar: View {
-    @State private var height: CGFloat = 10
-    let animationSpeed: Double = 0.3
-    let maxHeight: CGFloat
-    let minHeight: CGFloat
-    let width: CGFloat
-    let animate: Bool
-    
-    var body: some View {
-        if animate {
-            ZStack {
-                RoundedRectangle(cornerRadius: width/2)
-                    .frame(width: width, height: height)
-                    .animation(.easeInOut(duration: animationSpeed), value: 1.2)
-                    .foregroundColor(.green)
-                    .onAppear {
-                        Timer.scheduledTimer(withTimeInterval: animationSpeed, repeats: true) {_ in
-                            height = CGFloat.random(in: minHeight...maxHeight)
-                        }
-                    }
-            }
-            .frame(width: width, alignment: .bottom)
-        } else {
-            ZStack {
-                RoundedRectangle(cornerRadius: width/2)
-                    .frame(width: width, height: height)
-                    .animation(.easeInOut(duration: 0), value: 1.2)
-                    .foregroundColor(.green)
-                    .onAppear {
-                        Timer.scheduledTimer(withTimeInterval: animationSpeed, repeats: true) {_ in
-                            height = 10
-                        }
-                    }
-            }
-            .frame(width: width, alignment: .bottom)
-        }
-    }
-}
 
 

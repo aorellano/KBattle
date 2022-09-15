@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CountdownScreen: View {
     @State var timeRemaining = 3
-        let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State var scale = 1.0
     var body: some View {
         
@@ -20,11 +20,9 @@ struct CountdownScreen: View {
                 .fontWeight(.bold)
                 .foregroundColor(Color.primaryColor)
                 .onReceive(timer) { _ in
-                    
                     if timeRemaining > 0 {
-                        self.scale = 2
                         timeRemaining -= 1
-                        
+                        self.scale = 2
                     }
                 }
                 .scaleEffect(self.scale)
@@ -35,7 +33,6 @@ struct CountdownScreen: View {
             self.scale = 2
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-
         .background(Color(uiColor: UIColor.secondarySystemBackground))
     }
 }

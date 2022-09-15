@@ -56,5 +56,21 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 //        print("User: \(user)")
     }
     
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        print("entering foreground")
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        print("did become active")
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        print("will resign active")
+    }
+    
+    func applicationWillEnterBackground(_ application: UIApplication) {
+        print("entered background")
+    }
+    
     
 }

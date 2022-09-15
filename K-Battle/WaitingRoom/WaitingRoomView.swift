@@ -19,10 +19,10 @@ struct WaitingRoomView: View {
     @State var privateButtonColor: Color = Color.primaryColor
     @State var toggleScale: Bool = false
     @State var isActive: Bool = false
-    @State var showCountdown: Bool = false
+    @State var buttonIsDisabled: Bool = true
     @EnvironmentObject var sessionService: SessionServiceImpl
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
-    
+    @State var showCountdown: Bool = false
     @State var scale = 1.0
     
     init(viewModel: WaitingRoomViewModel) {
@@ -35,9 +35,9 @@ struct WaitingRoomView: View {
                 Text("Waiting for Players...")
                     .font(.system(size: 20))
                     .foregroundColor(.gray)
-            } else if showCountdown == true {
+            }else if showCountdown {
                 CountdownScreen()
-            } else {
+            }else {
                 Spacer()
                 VStack {
                     Spacer()
@@ -51,23 +51,28 @@ struct WaitingRoomView: View {
                             isPrivate.toggle()
                             if isPrivate == true {
                                 privateButtonColor = Color.primaryColor
+                                hapticFeedbackResponse(style: .light)
                             } else {
                                 privateButtonColor = Color.gray
+                                hapticFeedbackResponse(style: .light)
                             }
                             viewModel.makeGamePrivate()
                         }
+                        .animation(.spring(response: 0.9, dampingFraction: 0.8), value: 0.6)
                         .frame(width: 100, height: 50)
                         }
                         Spacer()
                         Text(viewModel.game?.code ?? "No Code Available")
-                        .fontWeight(.bold)
+                        .fontWeight(.semibold)
+                        .font(.system(size: 20))
                         .foregroundColor(Color.primaryColor)
                         Spacer()
-                        if sessionService.userDetails?.id == viewModel.game?.host ?? "" {
+                        if sessionService.userDetails?.id == viewModel.game?.host {
                             ButtonView(title: "Start", background: Color.primaryColor) {
+                                hapticFeedbackResponse(style: .light)
                                 viewModel.startGame()
                                 //isActive = true
-                            }
+                            }.disabled(buttonIsDisabled)
                             .frame(width: 100, height: 50)
                         }
                     }
@@ -114,6 +119,9 @@ struct WaitingRoomView: View {
         }
         .onChange(of: viewModel.game) { _ in
             print("the view has changed")
+            if (viewModel.game?.players.count)! > 1 {
+                buttonIsDisabled = false
+            }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.50) {
                 toggleScale.toggle()
                 if toggleScale {
@@ -127,16 +135,10 @@ struct WaitingRoomView: View {
                 showCountdown = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
                     isActive = true
-                    //AudioManager.shared.player?.playImmediately(atRate: 1.0)
                 }
             }
-            print(viewModel.game?.players)
         }
-        .onDisappear {
-            //viewModel.getSong(with: 0)
-            print("song: \(viewModel.song)")
-            print("onDisappear")
-        }
+
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action : {
             viewModel.removePlayer()
@@ -155,6 +157,10 @@ struct WaitingRoomView: View {
                 }
             }
         }
+    }
+    func hapticFeedbackResponse(style: UIImpactFeedbackGenerator.FeedbackStyle) {
+        let impactMed = UIImpactFeedbackGenerator(style: style)
+        impactMed.impactOccurred()
     }
 }
 

@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct ResultsView: View {
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+    @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
     var body: some View {
         VStack {
             Text("The Results are in...")
             ButtonView(title: "Done") {
-                print("the game has ended")
+                GameServiceImpl.shared.game = nil
+                self.rootPresentationMode.wrappedValue.dismiss()
             }
+            .padding()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(uiColor: UIColor.secondarySystemBackground))

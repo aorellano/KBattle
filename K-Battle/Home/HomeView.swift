@@ -12,6 +12,7 @@ struct HomeView: View {
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
     @EnvironmentObject var sessionService: SessionServiceImpl
+    @State var viewModel: WaitingRoomViewModel?
     @State var isActive: Bool = false
     @State var gameType: GameType? = nil
     @State var tabBarController: UITabBarController?
@@ -39,24 +40,34 @@ struct HomeView: View {
                         .frame(width: 20, height: 20)
                         .foregroundColor(Color.primaryColor)
                         .onTapGesture {
+                            hapticFeedbackResponse(style: .light)
                             gameType = .JoinGame(with: code)
-                            print("code: \(code)")
+                            viewModel = WaitingRoomViewModel(with: gameType ?? .NewGame, sessionService: sessionService)
+                            viewModel?.setupGame(with: gameType ?? .JoinRandomGame)
                             isActive = true
                         }
                 }
 
                 ButtonView(title: "Random Game", background: Color.primaryColor) {
+                    hapticFeedbackResponse(style: .light)
                     gameType = .JoinRandomGame
-                    isActive = true
-                }
-               
-                ButtonView(title: "Create Game", background: Color.primaryColor) {
-                    gameType = .NewGame
+                    viewModel = WaitingRoomViewModel(with: gameType ?? .NewGame, sessionService: sessionService)
+                    viewModel?.setupGame(with: gameType ?? .JoinRandomGame)
                     isActive = true
                 }
                 
-                if gameType != nil {
-                    NavigationLink(destination: NavigationLazyView(WaitingRoomView(viewModel: WaitingRoomViewModel(with: gameType ?? .NewGame, sessionService: sessionService))
+               
+                ButtonView(title: "Create Game", background: Color.primaryColor) {
+                    hapticFeedbackResponse(style: .light)
+                    gameType = .NewGame
+                    viewModel = WaitingRoomViewModel(with: gameType ?? .NewGame, sessionService: sessionService)
+                    viewModel?.setupGame(with: gameType ?? .NewGame)
+                    isActive = true
+                }
+               
+                
+                if viewModel != nil {
+                    NavigationLink(destination: NavigationLazyView(WaitingRoomView(viewModel: viewModel!)
                         .environmentObject(sessionService)), isActive: $isActive){
                     EmptyView()
                 }.isDetailLink(false)
@@ -66,7 +77,7 @@ struct HomeView: View {
                 tabBarController = UITabBarController
             }
             .onAppear {
-                print("id: \(UUID().uuidString.prefix(6))")
+                viewModel = nil
                 tabBarController?.tabBar.isHidden = false
             }
             .onDisappear {
@@ -79,6 +90,10 @@ struct HomeView: View {
         .environment(\.rootPresentationMode, self.$isActive)
         .navigationViewStyle(StackNavigationViewStyle())
         
+    }
+    func hapticFeedbackResponse(style: UIImpactFeedbackGenerator.FeedbackStyle) {
+        let impactMed = UIImpactFeedbackGenerator(style: style)
+        impactMed.impactOccurred()
     }
 }
 

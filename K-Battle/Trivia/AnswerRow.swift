@@ -40,7 +40,7 @@ struct AnswerRow: View {
                     isSelected = true
                     viewModel.selectAnswer(answer: answer, with: timeRemaining)
                 }
-                isSelected.toggle()
+
                 if answer.isCorrect {
                     backgroundColor = Color(uiColor: UIColor.systemGreen)
                     hapticFeedbackResponse(style: .light)

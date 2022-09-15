@@ -24,9 +24,7 @@ class WaitingRoomViewModel: ObservableObject {
     @Published var game: Game? {
         didSet {
             updateGameNotificationForGame(game)
-            print("updating")
             songIds = self.game?.questions ?? [""]
-            print(songIds)
         }
     }
     private var cancellables: Set<AnyCancellable> = []
@@ -36,7 +34,7 @@ class WaitingRoomViewModel: ObservableObject {
         self.gameType = gameType
         self.sessionService = sessionService
         print("init")
-        setupGame(with: gameType)
+        //setupGame(with: gameType)
     }
     
     func setupGame(with gameType: GameType) {
@@ -79,15 +77,19 @@ class WaitingRoomViewModel: ObservableObject {
     }
     
     func removePlayer() {
-        guard let info = sessionService.userDetails else { return }
-        GameServiceImpl.shared.removePlayer(info, to: game!)
-        changeHost()
+        guard let playerInfo = sessionService.userDetails else { return }
+        GameServiceImpl.shared.removePlayer(playerInfo, to: game!)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.90) {
+            self.changeHost(from: playerInfo.id)
+        }
+        
     }
     
-    func changeHost() {
-        let newHost = game?.players.first(where: {$0["id"] != Auth.auth().currentUser?.uid})
+    func changeHost(from id: String) {
+        let newHost = game?.players.first(where: {$0["id"] != id})
         if let newHost = newHost {
             GameServiceImpl.shared.game.host = newHost["id"]!
+            GameServiceImpl.shared.updateGame(self.game!)
         } else {
             GameServiceImpl.shared.deleteGame(with: game!.id)
         }
