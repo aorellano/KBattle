@@ -14,7 +14,6 @@ struct ResultsView: View {
         VStack {
             Text("The Results are in...")
             ButtonView(title: "Done") {
-                GameServiceImpl.shared.game = nil
                 self.rootPresentationMode.wrappedValue.dismiss()
             }
             .padding()

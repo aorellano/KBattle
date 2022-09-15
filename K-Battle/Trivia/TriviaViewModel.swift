@@ -90,6 +90,8 @@ class TriviaViewModel: ObservableObject {
         } else {
             score += 0
             streakCtr = 0
+            GameServiceImpl.shared.game.players[playerNumber]["score"] = String(score)
+            GameServiceImpl.shared.updateGame(self.game!)
         }
         
         //updatePlayersScore(answer: answer)

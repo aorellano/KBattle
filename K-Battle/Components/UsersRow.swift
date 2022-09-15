@@ -20,13 +20,15 @@ struct UsersRow: View {
         HStack {
             ForEach(players.indices, id: \.self) { index in
                 let player = players[index]
-                ProfilePicView(profilePic: player["profilePic"], size: 30, cornerRadius: 15)
+                ProfilePicView(profilePic: player["profilePic"], size: 32, cornerRadius: 16)
             }
-        }.onChange(of: viewModel.game!) { game in
-            players = (viewModel.game?.players.sorted(by: {$0["score"]! > $1["score"]!}))!
+        }
+        .onChange(of: viewModel.game!.players) { game in
+            players = (viewModel.game?.players.sorted(by: {Int($0["score"]!)! > Int($1["score"]!)!}))!
+            print("\(viewModel.game?.players)")
         }
         .onAppear {
-            players = (viewModel.game?.players.sorted(by: {$0["score"]! > $1["score"]!}))!
+            players = (viewModel.game?.players.sorted(by: {Int($0["score"]!)! > Int($1["score"]!)!}))!
         }
     }
 }

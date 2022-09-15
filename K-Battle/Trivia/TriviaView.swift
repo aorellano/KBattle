@@ -55,7 +55,7 @@ struct TriviaView: View {
                         Image("PandaBody")
                             .resizable()
                             .frame(width: 250, height: 175)
-                            .padding(.top, 58)
+                            .padding(.top, 64)
                             .padding(.leading, 123)
                         Image("PandaHead2")
                             .resizable()
@@ -72,6 +72,7 @@ struct TriviaView: View {
                     Spacer()
                     ForEach(viewModel.answers) { answer in
                         AnswerRow(answer, viewModel, timeRemaining: timeRemaining)
+                            .disabled(viewModel.answerSelected)
                     }
                     .padding([.leading, .trailing], 15)
                 }

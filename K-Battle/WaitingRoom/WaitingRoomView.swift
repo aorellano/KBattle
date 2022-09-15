@@ -119,7 +119,7 @@ struct WaitingRoomView: View {
         }
         .onChange(of: viewModel.game) { _ in
             print("the view has changed")
-            if (viewModel.game?.players.count)! > 1 {
+            if (viewModel.game?.players.count) ?? 0 > 1 {
                 buttonIsDisabled = false
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.50) {

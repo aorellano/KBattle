@@ -78,6 +78,7 @@ struct HomeView: View {
             }
             .onAppear {
                 viewModel = nil
+                print(viewModel)
                 tabBarController?.tabBar.isHidden = false
             }
             .onDisappear {
