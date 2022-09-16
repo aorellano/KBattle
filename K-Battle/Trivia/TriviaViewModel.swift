@@ -40,7 +40,6 @@ class TriviaViewModel: ObservableObject {
         self.answers = answers
         self.songIds = songIds
         self.sessionService = sessionService
-        print(self.game)
         setupGame()
         setPlayerNumber()
     }

@@ -20,7 +20,7 @@ struct UsersRow: View {
         HStack {
             ForEach(players.indices, id: \.self) { index in
                 let player = players[index]
-                ProfilePicView(profilePic: player["profilePic"], size: 32, cornerRadius: 16)
+                ProfilePicView(profilePic: player["profilePic"], size: 34, cornerRadius: 16)
             }
         }
         .onChange(of: viewModel.game!.players) { game in

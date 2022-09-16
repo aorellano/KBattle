@@ -17,7 +17,7 @@ struct CountdownScreen: View {
             Spacer()
             Text("\(timeRemaining)")
                 .font(.system(size: 150))
-                .fontWeight(.bold)
+                .fontWeight(.black)
                 .foregroundColor(Color.primaryColor)
                 .onReceive(timer) { _ in
                     if timeRemaining > 0 {

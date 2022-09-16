@@ -27,6 +27,8 @@ struct WaitingRoomView: View {
     
     init(viewModel: WaitingRoomViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
+        
+        print(isActive)
     }
     
     var body: some View {
@@ -130,7 +132,8 @@ struct WaitingRoomView: View {
                     self.scale = 1.2
                 }
             }
-            if viewModel.gameNotification == GameNotification.gameStarted {
+            if viewModel.game?.hasStarted == true {
+                print("this game is starting \(viewModel.gameNotification)")
                 viewModel.getSong(with: 0)
                 showCountdown = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
@@ -157,6 +160,10 @@ struct WaitingRoomView: View {
                 }
             }
         }
+        .onDisappear {
+            viewModel.gameNotification = GameNotification.hasntStarted
+        }
+
     }
     func hapticFeedbackResponse(style: UIImpactFeedbackGenerator.FeedbackStyle) {
         let impactMed = UIImpactFeedbackGenerator(style: style)

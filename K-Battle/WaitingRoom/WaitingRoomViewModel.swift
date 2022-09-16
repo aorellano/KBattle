@@ -24,6 +24,8 @@ class WaitingRoomViewModel: ObservableObject {
     @Published var game: Game? {
         didSet {
             updateGameNotificationForGame(game)
+            print("didSet \(game)")
+            print("didSet \(gameNotification)")
             songIds = self.game?.questions ?? [""]
         }
     }
@@ -31,9 +33,12 @@ class WaitingRoomViewModel: ObservableObject {
     
     init(with gameType: GameType, sessionService: SessionServiceImpl) {
         game = nil
+        
         self.gameType = gameType
         self.sessionService = sessionService
         print("init")
+        self.gameNotification = GameNotification.hasntStarted
+        print(gameNotification)
         //setupGame(with: gameType)
     }
     
@@ -66,8 +71,10 @@ class WaitingRoomViewModel: ObservableObject {
     }
     
     func updateGameNotificationForGame(_ state: Game?) {
+        print("update")
         if game?.hasStarted == true {
             gameNotification = GameNotification.gameStarted
+            print(gameType)
         }
     }
     

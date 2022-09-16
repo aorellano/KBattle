@@ -17,6 +17,13 @@ struct HomeView: View {
     @State var gameType: GameType? = nil
     @State var tabBarController: UITabBarController?
     @State var code = ""
+    
+    init() {
+        print(viewModel)
+        print(gameType)
+        viewModel = nil
+        print("YUUUUH")
+    }
   
     var body: some View {
         NavigationView {
@@ -42,7 +49,9 @@ struct HomeView: View {
                         .onTapGesture {
                             hapticFeedbackResponse(style: .light)
                             gameType = .JoinGame(with: code)
+                            print("Join Game \(gameType)")
                             viewModel = WaitingRoomViewModel(with: gameType ?? .NewGame, sessionService: sessionService)
+                            print("join Game viewmodel \(viewModel)")
                             viewModel?.setupGame(with: gameType ?? .JoinRandomGame)
                             isActive = true
                         }
@@ -51,6 +60,7 @@ struct HomeView: View {
                 ButtonView(title: "Random Game", background: Color.primaryColor) {
                     hapticFeedbackResponse(style: .light)
                     gameType = .JoinRandomGame
+                    print("RANDOM")
                     viewModel = WaitingRoomViewModel(with: gameType ?? .NewGame, sessionService: sessionService)
                     viewModel?.setupGame(with: gameType ?? .JoinRandomGame)
                     isActive = true
@@ -59,6 +69,7 @@ struct HomeView: View {
                
                 ButtonView(title: "Create Game", background: Color.primaryColor) {
                     hapticFeedbackResponse(style: .light)
+                    print("THE GAME")
                     gameType = .NewGame
                     viewModel = WaitingRoomViewModel(with: gameType ?? .NewGame, sessionService: sessionService)
                     viewModel?.setupGame(with: gameType ?? .NewGame)
@@ -77,12 +88,17 @@ struct HomeView: View {
                 tabBarController = UITabBarController
             }
             .onAppear {
-                viewModel = nil
-                print(viewModel)
+                print("on Appear: \(viewModel)")
+                print("on Appear: \(gameType)")
+                //viewModel = nil
+                gameType = nil
+                //print(viewModel)
                 tabBarController?.tabBar.isHidden = false
             }
             .onDisappear {
                 code = ""
+                print("onDissapear \(viewModel)")
+                print("onDissapear \(gameType)")
             }
             .padding()
             .background(Color(uiColor: UIColor.secondarySystemBackground))
