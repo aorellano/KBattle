@@ -24,6 +24,7 @@ protocol RegistrationViewModel {
     var hasError: Bool { get }
     var validator: CreateValidator { get }
     var error: FormError? { get }
+    
 }
 
 final class RegistrationViewModelImpl: ObservableObject, RegistrationViewModel {

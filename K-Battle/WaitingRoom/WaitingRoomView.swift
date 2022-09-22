@@ -136,7 +136,7 @@ struct WaitingRoomView: View {
                 print("this game is starting \(viewModel.gameNotification)")
                 viewModel.getSong(with: 0)
                 showCountdown = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3) + 0.80) {
                     isActive = true
                 }
             }

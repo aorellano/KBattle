@@ -26,7 +26,7 @@ struct TriviaView: View {
     
     var body: some View {
         ZStack {
-            NavigationLink(destination: NavigationLazyView(ResultsView()), isActive: $isActive){
+            NavigationLink(destination: NavigationLazyView(ResultsView(viewModel: viewModel)), isActive: $isActive){
                 EmptyView()
             }.isDetailLink(false)
             VStack {
@@ -99,7 +99,7 @@ struct TriviaView: View {
                    // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         showCountdown = true
                         viewModel.answerSelected = false
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3) + 0.80) {
                             timeRemaining = 10.0
                             showCountdown = false
                             AudioManager.shared.player?.playImmediately(atRate: 1.0)
@@ -114,6 +114,7 @@ struct TriviaView: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 AudioManager.shared.player?.playImmediately(atRate: 1.0)
                 animate = true
+                
             }
         }
         .navigationBarHidden(true)

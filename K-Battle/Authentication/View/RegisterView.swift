@@ -32,7 +32,7 @@ struct RegisterView: View {
                                     .frame(width: 125, height: 125)
                                     .cornerRadius(75)
                                     .overlay(RoundedRectangle(cornerRadius: 75)
-                                                .stroke(Color.gray, lineWidth: 1.5))
+                                        .stroke(Color.gray, lineWidth: 1.5))
                             } else {
                                 Image(systemName: "person.crop.circle.badge.plus")
                                     .font(.system(size: 125, weight: .light))
@@ -44,31 +44,49 @@ struct RegisterView: View {
                     }
                     VStack(spacing: 16) {
                         InputTextFieldView(text: $vm.userDetails.username,
-                                       placeholder: "Username",
-                                       keyboardType: .namePhonePad,
-                                       sfSymbol: "person")
+                                           placeholder: "Username",
+                                           keyboardType: .namePhonePad,
+                                           sfSymbol: "person")
                         InputTextFieldView(text: $vm.userDetails.email,
-                                       placeholder: "Email",
-                                       keyboardType: .emailAddress,
-                                       sfSymbol: "envelope")
+                                           placeholder: "Email",
+                                           keyboardType: .emailAddress,
+                                           sfSymbol: "envelope")
                         InputPasswordView(password: $vm.userDetails.password,
-                                       placeholder: "Password",
-                                       sfSymbol: "lock")
-                    
+                                          placeholder: "Password",
+                                          sfSymbol: "lock")
+                        
                     }
                     ButtonView(title: "Sign Up", background: Color.primaryColor) {
-                        
-                        
-                        Task {
-                            vm.profilePic = image
-                            await vm.register()
+                        if image == UIImage(named: "") {
+                            showAlert = true
+                        } else if vm.userDetails.username == "" || vm.userDetails.email == "" || vm.userDetails.password == "" {
+                            showingAlert2 = true
+                        } else {
+                            Task {
+                                vm.profilePic = image
+                                await vm.register()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.85) {
+                                    self.presentationMode.wrappedValue.dismiss()
+                                }
+                            }
+                           
                         }
-
+                        
                     }
                     Spacer()
-                        .alert(vm.error?.errorDescription ?? "Damn", isPresented: $vm.hasError) {
+                    .alert("Please Choose Profile Picture", isPresented: $showAlert) {
                                 Button("OK", role: .cancel) { }
                     }
+                    .alert("Please fill out all text fields", isPresented: $showingAlert2) {
+                        Button("OK", role: .cancel) { }
+                    }
+                    .alert(isPresented: $vm.hasError, content: {
+                        if case .failed(let error) = vm.state {
+                            return Alert(title: Text(error.localizedDescription))
+                        } else {
+                            return Alert(title: Text("Something went wrong"))
+                        }
+                    })
                 }
                 .padding(.horizontal, 15)
                 
@@ -82,6 +100,10 @@ struct RegisterView: View {
             ImagePicker(image: $image)
                 .ignoresSafeArea(.keyboard)
         }
+        
+    }
+    func dismissView() {
+        self.presentationMode.wrappedValue.dismiss()
     }
 }
 
