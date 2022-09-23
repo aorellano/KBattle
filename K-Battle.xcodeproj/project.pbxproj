@@ -23,6 +23,11 @@
 		D036BC9B28CBD2D800B77C61 /* CountdownScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036BC9A28CBD2D800B77C61 /* CountdownScreen.swift */; };
 		D036BC9D28CBD63000B77C61 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D036BC9C28CBD63000B77C61 /* AudioManager.swift */; };
 		D067A65228C2AA5500DBA4C7 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = D067A65128C2AA5500DBA4C7 /* Introspect */; };
+		D08C9F5928DC26EA00EE9C05 /* StoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08C9F5828DC26EA00EE9C05 /* StoreView.swift */; };
+		D08C9F5C28DCF07900EE9C05 /* AboutMeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08C9F5B28DCF07900EE9C05 /* AboutMeView.swift */; };
+		D08C9F5E28DD283300EE9C05 /* RankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08C9F5D28DD283300EE9C05 /* RankingView.swift */; };
+		D08C9F6028DD8BAD00EE9C05 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08C9F5F28DD8BAD00EE9C05 /* ReviewView.swift */; };
+		D08C9F6228DD8C4D00EE9C05 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08C9F6128DD8C4D00EE9C05 /* FeedbackView.swift */; };
 		D092D93B28C84A9100ED431E /* TriviaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092D93A28C84A9100ED431E /* TriviaViewModel.swift */; };
 		D092D93D28C84AFF00ED431E /* TriviaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092D93C28C84AFF00ED431E /* TriviaView.swift */; };
 		D092D93F28C84C0D00ED431E /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092D93E28C84C0D00ED431E /* ProgressBar.swift */; };
@@ -111,6 +116,11 @@
 		D036BC9928CBCB4100B77C61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D036BC9A28CBD2D800B77C61 /* CountdownScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownScreen.swift; sourceTree = "<group>"; };
 		D036BC9C28CBD63000B77C61 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		D08C9F5828DC26EA00EE9C05 /* StoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreView.swift; sourceTree = "<group>"; };
+		D08C9F5B28DCF07900EE9C05 /* AboutMeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMeView.swift; sourceTree = "<group>"; };
+		D08C9F5D28DD283300EE9C05 /* RankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingView.swift; sourceTree = "<group>"; };
+		D08C9F5F28DD8BAD00EE9C05 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
+		D08C9F6128DD8C4D00EE9C05 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		D092D93A28C84A9100ED431E /* TriviaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaViewModel.swift; sourceTree = "<group>"; };
 		D092D93C28C84AFF00ED431E /* TriviaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaView.swift; sourceTree = "<group>"; };
 		D092D93E28C84C0D00ED431E /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
@@ -211,6 +221,7 @@
 		D0192A0B28BDE2ED009EC882 /* K-Battle */ = {
 			isa = PBXGroup;
 			children = (
+				D08C9F5528DC26AD00EE9C05 /* New Group */,
 				D0CA2F2728CD990B0047ECCF /* Results */,
 				D036BC9928CBCB4100B77C61 /* Info.plist */,
 				D092D93728C84A7300ED431E /* Trivia */,
@@ -286,6 +297,29 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		D08C9F5528DC26AD00EE9C05 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		D08C9F5628DC26C100EE9C05 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				D08C9F5828DC26EA00EE9C05 /* StoreView.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		D08C9F5A28DCF06A00EE9C05 /* Developer */ = {
+			isa = PBXGroup;
+			children = (
+				D08C9F5B28DCF07900EE9C05 /* AboutMeView.swift */,
+			);
+			path = Developer;
+			sourceTree = "<group>";
+		};
 		D092D93728C84A7300ED431E /* Trivia */ = {
 			isa = PBXGroup;
 			children = (
@@ -304,7 +338,12 @@
 		D0C4DDD928C3F11200161617 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				D08C9F5A28DCF06A00EE9C05 /* Developer */,
+				D08C9F5628DC26C100EE9C05 /* Store */,
 				D0C4DDDA28C3F14C00161617 /* SettingsView.swift */,
+				D08C9F5D28DD283300EE9C05 /* RankingView.swift */,
+				D08C9F5F28DD8BAD00EE9C05 /* ReviewView.swift */,
+				D08C9F6128DD8C4D00EE9C05 /* FeedbackView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -562,6 +601,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D08C9F6228DD8C4D00EE9C05 /* FeedbackView.swift in Sources */,
 				D0E3324B28BEBA64006D0D77 /* RegisterView.swift in Sources */,
 				D092D94328C860C100ED431E /* Question.swift in Sources */,
 				D0E3327C28C0390D006D0D77 /* WaitingRoomViewModel.swift in Sources */,
@@ -589,6 +629,7 @@
 				D0E3325228BECE8B006D0D77 /* RegistrationDetails.swift in Sources */,
 				D0192A3D28BE9CB8009EC882 /* InputTextFieldView.swift in Sources */,
 				D0E3322D28BEA5E7006D0D77 /* LoginService.swift in Sources */,
+				D08C9F5E28DD283300EE9C05 /* RankingView.swift in Sources */,
 				D0C4DDE028C7C37F00161617 /* GameNotification.swift in Sources */,
 				D0E3327328C0251A006D0D77 /* GameService.swift in Sources */,
 				D0E3322A28BEA5BA006D0D77 /* LoginViewModel.swift in Sources */,
@@ -601,10 +642,13 @@
 				D092D93D28C84AFF00ED431E /* TriviaView.swift in Sources */,
 				D0192A3A28BE9C29009EC882 /* LoginView.swift in Sources */,
 				D0E3325F28BEEEDC006D0D77 /* SessionUserDetails.swift in Sources */,
+				D08C9F6028DD8BAD00EE9C05 /* ReviewView.swift in Sources */,
 				D092D94528C8612100ED431E /* Answer.swift in Sources */,
 				D0192A3728BDF13B009EC882 /* ProfilePicView.swift in Sources */,
 				D0E3322528BE9FE1006D0D77 /* ButtonView.swift in Sources */,
 				D0C4DDDB28C3F14C00161617 /* SettingsView.swift in Sources */,
+				D08C9F5928DC26EA00EE9C05 /* StoreView.swift in Sources */,
+				D08C9F5C28DCF07900EE9C05 /* AboutMeView.swift in Sources */,
 				D0E3325D28BEEE5B006D0D77 /* SessionService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

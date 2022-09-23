@@ -11,7 +11,7 @@ struct WelcomeHeader: View {
     @EnvironmentObject var sessionService: SessionServiceImpl
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Hey, \(sessionService.userDetails?.username ?? "")")
+            Text("Hey \(sessionService.userDetails?.username ?? ""),")
                 .font(.system(size: 20))
             Text("Ready to Play!")
                 .font(.system(size: 26))

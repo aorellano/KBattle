@@ -13,7 +13,7 @@ struct HomeLogo: View {
             Circle()
                 .frame(width: 225, height: 225)
                 .foregroundColor(Color.primaryColor)
-            Image(uiImage: UIImage(named: "BattleIcon")!)
+            Image(uiImage: UIImage(named: "KBattleLogo")!)
                 .resizable()
                 .scaledToFill()
                 .frame(width: 150, height: 150)

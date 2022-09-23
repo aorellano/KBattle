@@ -54,16 +54,16 @@ struct TriviaView: View {
                     ZStack {
                         Image("PandaBody")
                             .resizable()
-                            .frame(width: 250, height: 175)
-                            .padding(.top, 64)
-                            .padding(.leading, 123)
+                            .frame(width: 220, height: 175)
+                            .padding(.top, 72)
+                            .padding(.leading, 75)
                         Image("PandaHead2")
                             .resizable()
                             .frame(width: 155, height: 155)
                             //.scaleEffect(animate ? 0.9 : 0.8)
                             .scaleEffect(self.scale)
                             .animation(Animation.easeInOut(duration: 1).speed(.random(in: 3...4)).repeatForever(autoreverses: true), value: self.scale)
-                            .padding(.top, -90)
+                            .padding(.top, -100)
                             .padding(.trailing,5)
                             
                             
@@ -99,7 +99,7 @@ struct TriviaView: View {
                    // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         showCountdown = true
                         viewModel.answerSelected = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3) + 0.80) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3) + 0.60) {
                             timeRemaining = 10.0
                             showCountdown = false
                             AudioManager.shared.player?.playImmediately(atRate: 1.0)

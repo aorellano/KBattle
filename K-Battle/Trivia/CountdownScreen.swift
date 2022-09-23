@@ -24,7 +24,7 @@ struct CountdownScreen: View {
                 .foregroundColor(Color.primaryColor)
                 .onReceive(timer) { _ in
                     
-                    if timeRemaining >= 0 {
+                    if timeRemaining > 0 {
                         AudioServicesPlaySystemSoundWithCompletion(systemSoundID) {
                             print("hi")
                             timeRemaining -= 1

@@ -19,10 +19,7 @@ struct HomeView: View {
     @State var code = ""
     
     init() {
-        print(viewModel)
-        print(gameType)
         viewModel = nil
-        print("YUUUUH")
     }
   
     var body: some View {
@@ -32,11 +29,13 @@ struct HomeView: View {
                     Spacer()
                     ProfilePicView(profilePic: sessionService.userDetails?.profilePic, size: 50, cornerRadius: 25)
                 }
+                
                 HStack {
                     WelcomeHeader()
                         .environmentObject(sessionService)
                     Spacer()
                 }
+            
                 Spacer()
                 HomeLogo()
                 Spacer()

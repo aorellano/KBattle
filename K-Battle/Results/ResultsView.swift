@@ -30,6 +30,14 @@ struct ResultsView: View {
                         Text("Second Place")
                             .font(.system(size: 14))
                             .fontWeight(.medium)
+                        HStack {
+                            Image("Coin")
+                                .resizable()
+                                .frame(width: 16, height: 16)
+                            Text(players[1]["score"] ?? "0")
+                                .fontWeight(.bold)
+                                .font(.system(size: 12))
+                        }
                     }
                 }
                 .padding()
@@ -41,6 +49,15 @@ struct ResultsView: View {
                         Text("First Place")
                             .font(.system(size: 14))
                             .fontWeight(.medium)
+                        HStack {
+                            Image("Coin")
+                                .resizable()
+                                .frame(width: 16, height: 16)
+                            Text(players[0]["score"] ?? "0")
+                                .fontWeight(.bold)
+                                .font(.system(size: 12))
+                        }
+                        
                     }
                 }
                 .padding(.top, -120)
@@ -52,6 +69,14 @@ struct ResultsView: View {
                         Text("Third Place")
                             .font(.system(size: 14))
                             .fontWeight(.medium)
+                        HStack {
+                            Image("Coin")
+                                .resizable()
+                                .frame(width: 16, height: 16)
+                            Text(players[2]["score"] ?? "0")
+                                .fontWeight(.bold)
+                                .font(.system(size: 12))
+                        }
                     }
                     .padding()
                 } else {
@@ -62,6 +87,14 @@ struct ResultsView: View {
                         Text("Third Place")
                             .font(.system(size: 14))
                             .fontWeight(.medium)
+                        HStack {
+                            Image("Coin")
+                                .resizable()
+                                .frame(width: 16, height: 16)
+                            Text("")
+                                .fontWeight(.bold)
+                                .font(.system(size: 12))
+                        }
                     }
                     .padding()
                 }
@@ -77,7 +110,13 @@ struct ResultsView: View {
                         Text(lastPlayers[index]["username"] ?? "")
                             .font(.system(size: 12))
                     
-                        Spacer()
+                        Image("Coin")
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                        Text(lastPlayers[index]["score"] ?? "")
+                            .fontWeight(.bold)
+                            .font(.system(size: 12))
+                        
                         Text("\(index+4)th")
                             .font(.system(size: 20))
                             .fontWeight(.bold)

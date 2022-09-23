@@ -21,40 +21,46 @@ struct SettingsView: View {
                     List {
                        // first section
                        Section(header: Text("Account")) {
-                        NavigationLink(destination: EmptyView(), label: {
-                              Text("Leaderboard")
+                           NavigationLink(destination: RankingView(sessionService: sessionService), label: {
+                              Text("Ranking")
                            })
                        }
 
     
-                       Section(header: Text("Question Factory")) {
-                           NavigationLink(destination: NavigationLazyView(EmptyView()), label: {
-                               Text("Submit Questions")
-                            })
-
-                           NavigationLink(destination: EmptyView(), label: {
-                                Text("Review Questions")
+                       Section(header: Text("Add Ons")) {
+                           NavigationLink(destination: NavigationLazyView(StoreView()), label: {
+                               Text("Store")
                             })
 
                        }
+                        
+                        Section(header: Text("Developer")) {
+                            NavigationLink(destination: NavigationLazyView(AboutMeView()), label: {
+                                Text("About Me")
+                             })
+                            
+                            NavigationLink(destination: NavigationLazyView(ReviewView()), label: {
+                                Text("Leave a Review")
+                            })
+                            NavigationLink(destination: NavigationLazyView(FeedbackView()), label: {
+                                Text("Give Feedback/Suggestions")
+                            })
+                        }
+                        
+                        Section(header: Text("Log Out")) {
+                            Button("Sign Out") {
+                                sessionService.logout()
+                            }
 
+                        }
 
-                       
                     }
-                    .cornerRadius(20)
-                    .padding()
-                    
-
-
-                    ButtonView(title: "Sign Out", background: Color.primaryColor) {
-                            sessionService.logout()
-                    }
-                    .padding([.top, .bottom], 20)
-                    .padding()
+                
                     .navigationTitle(Text("Profile"))
                 }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color(uiColor: UIColor.secondarySystemBackground))
+            //.background(Color(uiColor: UIColor.secondarySystemBackground))
+            .background(Color.primaryColor)
             }
     }
 }
