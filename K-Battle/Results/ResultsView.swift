@@ -30,13 +30,14 @@ struct ResultsView: View {
                         Text("Second Place")
                             .font(.system(size: 14))
                             .fontWeight(.medium)
+                            .foregroundColor(Color.primaryColor)
                         HStack {
                             Image("Coin")
                                 .resizable()
-                                .frame(width: 16, height: 16)
+                                .frame(width: 24, height: 24)
                             Text(players[1]["score"] ?? "0")
                                 .fontWeight(.bold)
-                                .font(.system(size: 12))
+                                .font(.system(size: 16))
                         }
                     }
                 }
@@ -49,13 +50,14 @@ struct ResultsView: View {
                         Text("First Place")
                             .font(.system(size: 14))
                             .fontWeight(.medium)
+                            .foregroundColor(Color.primaryColor)
                         HStack {
                             Image("Coin")
                                 .resizable()
-                                .frame(width: 16, height: 16)
+                                .frame(width: 24, height: 24)
                             Text(players[0]["score"] ?? "0")
                                 .fontWeight(.bold)
-                                .font(.system(size: 12))
+                                .font(.system(size: 16))
                         }
                         
                     }
@@ -69,13 +71,14 @@ struct ResultsView: View {
                         Text("Third Place")
                             .font(.system(size: 14))
                             .fontWeight(.medium)
+                            .foregroundColor(Color.primaryColor)
                         HStack {
                             Image("Coin")
                                 .resizable()
-                                .frame(width: 16, height: 16)
+                                .frame(width: 24, height: 24)
                             Text(players[2]["score"] ?? "0")
                                 .fontWeight(.bold)
-                                .font(.system(size: 12))
+                                .font(.system(size: 16))
                         }
                     }
                     .padding()
@@ -87,10 +90,11 @@ struct ResultsView: View {
                         Text("Third Place")
                             .font(.system(size: 14))
                             .fontWeight(.medium)
+                            .foregroundColor(Color.primaryColor)
                         HStack {
                             Image("Coin")
                                 .resizable()
-                                .frame(width: 16, height: 16)
+                                .frame(width: 24, height: 24)
                             Text("")
                                 .fontWeight(.bold)
                                 .font(.system(size: 12))
@@ -105,22 +109,25 @@ struct ResultsView: View {
                 Spacer()
                 ForEach(lastPlayers.indices, id: \.self) { index in
                     HStack {
+                        Text("\(index+4)th")
+                            .foregroundColor(Color.primaryColor)
+                            .font(.system(size: 20))
+                            .fontWeight(.bold)
+                            .padding()
                         ProfilePicView(profilePic: lastPlayers[index]["profilePic"], size: 64, cornerRadius: 32)
                             .padding([.leading], 6)
                         Text(lastPlayers[index]["username"] ?? "")
                             .font(.system(size: 12))
-                    
+                        Spacer()
                         Image("Coin")
                             .resizable()
-                            .frame(width: 16, height: 16)
+                            .frame(width: 24, height: 24)
                         Text(lastPlayers[index]["score"] ?? "")
                             .fontWeight(.bold)
-                            .font(.system(size: 12))
+                            .font(.system(size: 16))
+                            .padding(.trailing, 6)
                         
-                        Text("\(index+4)th")
-                            .font(.system(size: 20))
-                            .fontWeight(.bold)
-                            .padding()
+                        
                         }
                     .foregroundColor(.black)
                     .frame(height: 80)

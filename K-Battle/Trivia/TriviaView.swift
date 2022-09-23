@@ -54,8 +54,8 @@ struct TriviaView: View {
                     ZStack {
                         Image("PandaBody")
                             .resizable()
-                            .frame(width: 220, height: 175)
-                            .padding(.top, 72)
+                            .frame(width: 215, height: 175)
+                            .padding(.top, 74)
                             .padding(.leading, 75)
                         Image("PandaHead2")
                             .resizable()
