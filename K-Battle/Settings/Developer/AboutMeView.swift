@@ -12,8 +12,11 @@ struct AboutMeView: View {
    
     var body: some View {
         VStack {
-            ProfilePicView(profilePic: "", size: 150, cornerRadius: 75)
-            //.
+            Image("Minnie2")
+                .resizable()
+                .scaledToFill()
+                .frame(width: 150, height: 150)
+                .clipShape(Circle())
             
             VStack(alignment: .leading) {
                 
@@ -55,6 +58,7 @@ struct AboutMeView: View {
                     }
                 }
             }
+            .padding(.top, -100)
 
             
         }

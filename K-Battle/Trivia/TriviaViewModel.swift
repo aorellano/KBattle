@@ -92,13 +92,16 @@ class TriviaViewModel: ObservableObject {
             GameServiceImpl.shared.game.players[playerNumber]["score"] = String(score)
             GameServiceImpl.shared.updateGame(self.game!)
         }
-        
+
         //updatePlayersScore(answer: answer)
-        print("Player Score: \(self.score)")
     }
     
     func updatePlayersScore(answer: Answer) {
         
         //
+    }
+    
+    func updatePlayerTotalScore() {
+        GameServiceImpl.shared.updatePlayerTotalScore(with: Auth.auth().currentUser?.uid ?? "", and: score)
     }
 }

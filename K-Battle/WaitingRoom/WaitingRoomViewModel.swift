@@ -45,7 +45,7 @@ class WaitingRoomViewModel: ObservableObject {
     func setupGame(with gameType: GameType) {
         switch gameType {
         case .NewGame:
-            GameServiceImpl.shared.createNewGame(with: sessionService.userDetails ?? SessionUserDetails(id: "", username: "", profilePic: ""))
+            GameServiceImpl.shared.createNewGame(with: sessionService.userDetails ?? SessionUserDetails(id: "", username: "", profilePic: "", totalScore: 0))
             GameServiceImpl.shared.$game
                 .assign(to: \.game, on: self)
                 .store(in: &cancellables)
@@ -55,14 +55,14 @@ class WaitingRoomViewModel: ObservableObject {
             playerCount = players
             songIds = self.game?.questions ?? [""]
         case .JoinRandomGame:
-            GameServiceImpl.shared.joinGame(with: sessionService.userDetails ?? SessionUserDetails(id: "", username: "", profilePic: ""))
+            GameServiceImpl.shared.joinGame(with: sessionService.userDetails ?? SessionUserDetails(id: "", username: "", profilePic: "", totalScore: 0))
             GameServiceImpl.shared.$game
                 .assign(to: \.game, on: self)
                 .store(in: &cancellables)
             print("Joining Random Game")
             songIds = self.game?.questions ?? [""]
         case .JoinGame(let code):
-            GameServiceImpl.shared.joinGame(with: sessionService.userDetails ?? SessionUserDetails(id: "", username: "", profilePic: ""), and: code)
+            GameServiceImpl.shared.joinGame(with: sessionService.userDetails ?? SessionUserDetails(id: "", username: "", profilePic: "", totalScore: 0), and: code)
             GameServiceImpl.shared.$game
                 .assign(to: \.game, on: self)
                 .store(in: &cancellables)

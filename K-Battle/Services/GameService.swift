@@ -137,6 +137,16 @@ class GameServiceImpl: ObservableObject, GameService {
     func deleteGame(with gameId: String) {
         FirebaseReference(.game).document(gameId).delete()
     }
+    
+    func updatePlayerTotalScore(with id: String, and score: Int) {
+        let userRef = FirebaseReference(.users).document(id)
+        userRef.updateData(["totalScore": FieldValue.increment(Int64(score))]) { error in
+            if let err = error {
+                print(err)
+                return
+            }
+        }
+    }
 }
 
 //when the host leaves the game a new host should be assigned

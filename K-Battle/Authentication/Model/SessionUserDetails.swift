@@ -12,5 +12,5 @@ struct SessionUserDetails {
     let username: String
     let profilePic: String
 //    let currentScore: String
-//    let totalScore: String
+    let totalScore: Double
 }

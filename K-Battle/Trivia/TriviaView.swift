@@ -90,6 +90,7 @@ struct TriviaView: View {
             } else if roundedValue == 0.0 {
                 if questionCtr == 5 {
                     viewModel.timer.upstream.connect().cancel()
+                    viewModel.updatePlayerTotalScore()
                     isActive = true
                 } else {
                     self.scale = 1.0

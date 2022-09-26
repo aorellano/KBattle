@@ -13,18 +13,37 @@ struct SettingsView: View {
         NavigationView {
             VStack {
                 ProfilePicView(profilePic: sessionService.userDetails?.profilePic, size: 100, cornerRadius: 50)
-
+                
+                    
                     Text(sessionService.userDetails?.username ?? "")
                         .fontWeight(.bold)
                         .padding(.bottom, 20)
+                HStack {
+                 
+                    Image("Heart")
+                        .resizable()
+                        .frame(width: 30, height: 25)
+                       
+                    Text("x3")
+                    .font(.system(size: 18))
+                    .fontWeight(.bold)
+                    Spacer()
+                    Image("Coin")
+                        .resizable()
+                        .frame(width: 25, height: 25)
+                    Text("\(Int(sessionService.userDetails?.totalScore ?? 0) )")
+                    .font(.system(size: 16))
+                    .fontWeight(.bold)
+                }
+                .padding()
 
                     List {
-                       // first section
-                       Section(header: Text("Account")) {
-                           NavigationLink(destination: RankingView(sessionService: sessionService), label: {
-                              Text("Ranking")
-                           })
-                       }
+//                       // first section
+//                       Section(header: Text("Account")) {
+//                           NavigationLink(destination: RankingView(sessionService: sessionService), label: {
+//                              Text("Ranking")
+//                           })
+//                       }
 
     
                        Section(header: Text("Add Ons")) {
