@@ -57,6 +57,24 @@ struct AboutMeView: View {
                         
                     }
                 }
+                Text("Follow for Updates!")
+                HStack {
+                    Spacer()
+                    Link(destination: URL(string: "https://www.instagram.com/AlexisCodes/")!) // <- Add your link here
+                           {
+                               Image("instagram") // <- Change icon to your preferred one
+                                   .resizable()
+                                   .frame(width: 40, height: 40)
+                           }
+                    Link(destination: URL(string: "https://www.twitter.com/AlexisCodes/")!) // <- Add your link here
+                           {
+                               Image("twitter") // <- Change icon to your preferred one
+                                   .resizable()
+                                   .frame(width: 40, height: 40)
+                           }
+                    
+                    Spacer()
+                }
             }
             .padding(.top, -100)
 

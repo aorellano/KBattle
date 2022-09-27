@@ -6,9 +6,14 @@
 //
 
 import SwiftUI
+import StoreKit
+import MessageUI
 
 struct SettingsView: View {
     @EnvironmentObject var sessionService: SessionServiceImpl
+    @State var result: Result<MFMailComposeResult, Error>? = nil
+    @State var isShowingMailView = false
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -22,15 +27,18 @@ struct SettingsView: View {
                  
                     Image("Heart")
                         .resizable()
-                        .frame(width: 30, height: 25)
+                        .frame(width: 28, height: 23)
                        
-                    Text("x3")
+                    Text("x")
                     .font(.system(size: 18))
                     .fontWeight(.bold)
+                    Text("\(Int(sessionService.userDetails?.lives ?? 0))")
+                        .font(.system(size: 18))
+                        .fontWeight(.bold)
                     Spacer()
                     Image("Coin")
                         .resizable()
-                        .frame(width: 25, height: 25)
+                        .frame(width: 26, height: 26)
                     Text("\(Int(sessionService.userDetails?.totalScore ?? 0) )")
                     .font(.system(size: 16))
                     .fontWeight(.bold)
@@ -58,12 +66,28 @@ struct SettingsView: View {
                                 Text("About Me")
                              })
                             
-                            NavigationLink(destination: NavigationLazyView(ReviewView()), label: {
-                                Text("Leave a Review")
-                            })
-                            NavigationLink(destination: NavigationLazyView(FeedbackView()), label: {
-                                Text("Give Feedback/Suggestions")
-                            })
+//                            NavigationLink(destination: NavigationLazyView(ReviewView()), label: {
+//                                Text("Leave a Review")
+//                            })
+//                            NavigationLink(destination: NavigationLazyView(FeedbackView()), label: {
+//                                Text("Give Suggestions")
+//                            })
+                            
+                            Button("Give Suggestions") {
+                                self.isShowingMailView.toggle()
+                            }
+                            
+                            Button("Leave a Review") {
+                            
+                                if let scene = UIApplication.shared.connectedScenes.first(where: {$0.activationState == .foregroundActive}) as? UIWindowScene {
+                                    SKStoreReviewController.requestReview(in: scene)
+                                }
+                                
+                            }
+                            .disabled(!MFMailComposeViewController.canSendMail())
+                            .sheet(isPresented: $isShowingMailView) {
+                                MailView(result: self.$result)
+                            }
                         }
                         
                         Section(header: Text("Log Out")) {
@@ -74,7 +98,7 @@ struct SettingsView: View {
                         }
 
                     }
-                
+                 
                     .navigationTitle(Text("Profile"))
                 }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -84,8 +108,3 @@ struct SettingsView: View {
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
-    }
-}

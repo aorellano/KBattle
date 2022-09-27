@@ -53,8 +53,8 @@ final class RegistrationServiceImpl: ObservableObject, RegistrationService {
                         RegistrationKeys.username.rawValue: details.username,
                         RegistrationKeys.email.rawValue: details.email,
                         RegistrationKeys.profilePicUrl.rawValue: profilePic,
-//                        "currentScore": "0",
-                        "totalScore": "0"
+                        "totalScore": "0",
+                        "lives": "3"
                         ]
         FirebaseReference(.users).document(uid).setData(userData) { err in
             if let err = err {

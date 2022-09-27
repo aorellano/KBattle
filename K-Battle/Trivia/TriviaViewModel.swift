@@ -104,4 +104,8 @@ class TriviaViewModel: ObservableObject {
     func updatePlayerTotalScore() {
         GameServiceImpl.shared.updatePlayerTotalScore(with: Auth.auth().currentUser?.uid ?? "", and: score)
     }
+    
+    func updatePlayerLives() {
+        GameServiceImpl.shared.updatePlayerLives(with: Auth.auth().currentUser?.uid ?? "")
+    }
 }

@@ -91,6 +91,7 @@ struct TriviaView: View {
                 if questionCtr == 5 {
                     viewModel.timer.upstream.connect().cancel()
                     viewModel.updatePlayerTotalScore()
+                    viewModel.updatePlayerLives()
                     isActive = true
                 } else {
                     self.scale = 1.0

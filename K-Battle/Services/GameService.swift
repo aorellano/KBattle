@@ -147,6 +147,16 @@ class GameServiceImpl: ObservableObject, GameService {
             }
         }
     }
+    
+    func updatePlayerLives(with id: String) {
+        let userRef = FirebaseReference(.users).document(id)
+        userRef.updateData(["lives": FieldValue.increment(Int64(-1))]) { error in
+            if let err = error {
+                print(err)
+                return
+            }
+        }
+    }
 }
 
 //when the host leaves the game a new host should be assigned

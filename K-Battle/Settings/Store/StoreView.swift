@@ -57,6 +57,10 @@ struct StoreView: View {
                                         
                                     }
                                 }
+                                .onTapGesture {
+                                    print("trying to buy \(item)")
+                                }
+
                             }
                         }
                     }
@@ -75,6 +79,7 @@ struct StoreView: View {
                                             .frame(width: 90, height: 100)
                                             .padding(.trailing, 10)
                                     }
+                                    
                                     HStack {
                                         Text(item)
                                             .fontWeight(.regular)
@@ -88,6 +93,9 @@ struct StoreView: View {
                                             .font(.system(size: 12))
                                         
                                     }
+                                }
+                                .onTapGesture {
+                                    print("trying to buy \(item)")
                                 }
                             }
                         }

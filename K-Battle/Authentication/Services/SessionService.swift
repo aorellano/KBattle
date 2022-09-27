@@ -60,11 +60,11 @@ private extension SessionServiceImpl {
             
             guard let username = data[RegistrationKeys.username.rawValue] as? String else { return }
             guard let profilePic = data[RegistrationKeys.profilePicUrl.rawValue] as? String else { return }
-//            guard let currentScore = data["currentScore"] as? String else { return }
             guard let totalScore = data["totalScore"] as? Double else { return }
+            guard let lives = data["lives"] as? Double else { return }
             
             DispatchQueue.main.async {
-                self.userDetails = SessionUserDetails(id: uid, username: username, profilePic: profilePic, totalScore: totalScore)
+                self.userDetails = SessionUserDetails(id: uid, username: username, profilePic: profilePic, totalScore: totalScore, lives: lives)
             }
         }
     }

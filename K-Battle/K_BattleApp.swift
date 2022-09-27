@@ -32,7 +32,17 @@ struct K_BattleApp: App {
                 }
                 case .loggedOut:
                     LoginView()
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                        UIApplication.shared.applicationIconBadgeNumber = 0
+                        DataTimer.shared.check()
+                        if Date().timeIntervalSince(DataTimer.shared.endDate) < 0 {
+                            print("end date ahead")
+                        } else {
+                            print("add lives to player")
+                        }
+                    }
             }
+                
         }
     }
 }
@@ -43,34 +53,34 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return true
     }
     
-    func applicationWillTerminate(_ application: UIApplication) {
-        print("Terminating")
-        //remove player from the game
-        
-//        guard let game = GameServiceImpl.shared.game else { return }
-//        guard let user = Auth.auth().currentUser?.uid else { return }
+ 
+//    func applicationWillTerminate(_ application: UIApplication) {
+//        print("Terminating")
+//        //remove player from the game
 //
-//        GameServiceImpl.shared.removePlayer(with: user, for: game.id)
-//        GameServiceImpl.shared.updateGame(GameServiceImpl.shared.game)
-//        print("Game Id: \(game)")
-//        print("User: \(user)")
-    }
-    
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        print("entering foreground")
-    }
-    
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        print("did become active")
-    }
-    
-    func applicationWillResignActive(_ application: UIApplication) {
-        print("will resign active")
-    }
-    
-    func applicationWillEnterBackground(_ application: UIApplication) {
-        print("entered background")
-    }
+////        guard let game = GameServiceImpl.shared.game else { return }
+////        guard let user = Auth.auth().currentUser?.uid else { return }
+////
+////        GameServiceImpl.shared.removePlayer(with: user, for: game.id)
+////        GameServiceImpl.shared.updateGame(GameServiceImpl.shared.game)
+////        print("Game Id: \(game)")
+////        print("User: \(user)")
+//    }
+//
+//    func applicationWillEnterForeground(_ application: UIApplication) {
+//        print("entering foreground")
+//    }
+//
+//
+//
+//    func applicationWillResignActive(_ application: UIApplication) {
+//        print("will resign active")
+//    }
+//
+//    func applicationDidEnterBackground(_ application: UIApplication) {
+//        print("entered background")
+//    }
+//
     
     
 }
